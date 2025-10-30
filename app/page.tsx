@@ -48,4 +48,28 @@ export default async function Home() {
     </div>
     
   )
-}
+} 
+
+/* import { client } from "@/lib/sanity.client";
+//import { allPostsQuery } from "@/lib/sanity.queries";
+
+export default async function HomePage() {
+ // const posts = await client.fetch(allPostsQuery);
+
+  return (
+    <main className="p-8">
+      <h1 className="text-3xl font-bold mb-6">Sanity Blog</h1>
+      <ul className="space-y-4">
+        {posts.map((post: any) => (
+          <li key={post._id} className="p-4 border rounded-lg">
+            <h2 className="text-xl font-semibold">{post.title}</h2>
+            {post.slug && (
+              <p className="text-gray-500">/{post.slug.current}</p>
+            )}
+          </li>
+        ))}
+      </ul>
+    </main>
+  );
+} */
+
