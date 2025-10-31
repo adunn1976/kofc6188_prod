@@ -26,3 +26,14 @@ export default defineConfig({
     visionTool({defaultApiVersion: apiVersion}),
   ],
 }) */
+
+  export default defineConfig({
+  basePath: '/studio',
+  projectId,
+  dataset,
+  // Add and edit the content schema in the './sanity/schemaTypes' folder
+  schema,
+  plugins: [
+    
+  ],
+})
