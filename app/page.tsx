@@ -1,75 +1,73 @@
-import { client } from '../lib/sanity'
-import Link from 'next/link'
-
-export default async function Home() {
-  const events = await client.fetch('*[_type == "event"] | order(date asc)[0..2]')
-  const officers = await client.fetch('*[_type == "officer"] | order(role asc)[0..3]')
-
-  return (
-    <div className="max-w-4xl mx-auto p-8">
-      <section className="text-center py-12">
-        <h1 className="text-4xl font-bold">Knights of Columbus<br/>Corpus Christi Council 6188</h1>
-        <p className="mt-4 text-lg">Faith · Family · Fraternity · Service</p>
-      </section>
-
-      <section className="py-6">
-        <h2 className="text-2xl font-semibold mb-4">Featured Events</h2>
-        <div className="grid gap-4">
-          {events.map((e:any) => (
-            <div key={e._id} className="p-4 border rounded">
-              <h3 className="font-semibold">{e.title}</h3>
-              <p className="text-sm">{new Date(e.date).toLocaleString()}</p>
-              <p className="mt-2">{e.description}</p>
-            </div>
-          ))}
-        </div>
-        <div className="mt-4">
-          <Link href="/events" className="text-blue-600">View all events →</Link>
-        </div>
-      </section>
-      <div className="bg-blue-500 text-white p-8 rounded-xl">
-      Tailwind is now working 🎉
-    </div>
-
-      <section className="py-6">
-        <h2 className="text-2xl font-semibold mb-4">Officers</h2>
-        <div className="grid md:grid-cols-2 gap-4">
-          {officers.map((o:any) => (
-            <div key={o._id} className="p-4 border rounded">
-              <p className="font-semibold">{o.name}</p>
-              <p className="text-sm">{o.role}</p>
-            </div>
-          ))}
-        </div>
-        <div className="mt-4">
-          <Link href="/officers" className="text-blue-600">Meet the team →</Link>
-        </div>
-      </section>
-    </div>
-    
-  )
-} 
-
-/* import { client } from "@/lib/sanity.client";
-//import { allPostsQuery } from "@/lib/sanity.queries";
+import { client } from "@/lib/sanity.client"
+import { homepageQuery } from "@/lib/sanity.queries"
+import Hero from "@/components/Hero"
+import Card from "@/components/Card"
+import Image from "next/image"
+import Link from "next/link"
+import { PortableText } from "@portabletext/react"
 
 export default async function HomePage() {
- // const posts = await client.fetch(allPostsQuery);
+  const data = await client.fetch(homepageQuery)
 
   return (
-    <main className="p-8">
-      <h1 className="text-3xl font-bold mb-6">Sanity Blog</h1>
-      <ul className="space-y-4">
-        {posts.map((post: any) => (
-          <li key={post._id} className="p-4 border rounded-lg">
-            <h2 className="text-xl font-semibold">{post.title}</h2>
-            {post.slug && (
-              <p className="text-gray-500">/{post.slug.current}</p>
-            )}
-          </li>
-        ))}
-      </ul>
-    </main>
-  );
-} */
+    <main className="flex flex-col items-center">
+      {/* Hero */}
+      <Hero title={data?.title} image={data?.heroImage?.asset?._ref} />
 
+      {/* Intro Section */}
+      <section className="max-w-4xl mx-auto p-6 text-center">
+        <PortableText value={data?.introText} />
+      </section>
+
+      {/* Featured Programs */}
+      {data?.featuredPrograms?.length > 0 && (
+        <section className="max-w-6xl mx-auto p-6">
+          <h2 className="text-3xl font-bold text-center mb-6">Our Programs</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {data.featuredPrograms.map((program: any) => (
+              <Card key={program.slug.current} {...program} />
+            ))}
+          </div>
+          <div className="text-center mt-6">
+            <Link
+              href="/programs"
+              className="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
+            >
+              View All Programs
+            </Link>
+          </div>
+        </section>
+      )}
+
+      {/* News Section */}
+      {data?.featuredNews?.length > 0 && (
+        <section className="max-w-6xl mx-auto p-6 bg-gray-100 w-full">
+          <h2 className="text-3xl font-bold text-center mb-6">Latest News</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {data.featuredNews.map((news: any) => (
+              <Link
+                key={news.slug.current}
+                href={`/news/${news.slug.current}`}
+                className="block bg-white rounded-lg shadow hover:shadow-lg"
+              >
+                {news.mainImage && (
+                  <Image
+                    src={news.mainImage}
+                    alt={news.title}
+                    width={400}
+                    height={250}
+                    className="rounded-t-lg object-cover"
+                  />
+                )}
+                <div className="p-4">
+                  <h3 className="font-semibold text-lg mb-2">{news.title}</h3>
+                  <p className="text-gray-600 text-sm">{news.excerpt}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+    </main>
+  )
+}
