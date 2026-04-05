@@ -1,0 +1,14 @@
+{
+  "name": "kofc6188-sanity-studio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "sanity start",
+    "build": "sanity build",
+    "deploy": "sanity deploy"
+  },
+  "dependencies": {
+    "sanity": "^5.0.0",
+    "styled-components": "^6.1.19"
+  }
+}
