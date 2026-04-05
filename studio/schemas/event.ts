@@ -1,0 +1,45 @@
+import { defineType } from 'sanity'
+
+export default defineType({
+  name: 'event',
+  title: 'Event',
+  type: 'document',
+  fields: [
+    {
+      name: 'title',
+      title: 'Title',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'date',
+      title: 'Date',
+      type: 'datetime',
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'description',
+      title: 'Description',
+      type: 'text',
+      rows: 4,
+    },
+    {
+      name: 'location',
+      title: 'Location',
+      type: 'string',
+    },
+  ],
+  preview: {
+    select: {
+      title: 'title',
+      date: 'date',
+    },
+    prepare(selection) {
+      const { title, date } = selection
+      return {
+        title,
+        subtitle: date ? new Date(date).toLocaleDateString() : '',
+      }
+    },
+  },
+})
