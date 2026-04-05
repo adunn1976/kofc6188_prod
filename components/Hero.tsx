@@ -41,30 +41,30 @@ export default function Hero({ data }: { data: any }) {
   );
 } */
 
-import Image from "next/image";
-import { urlFor } from "@/lib/sanity.image";
+// import Image from "next/image";
+// import { urlFor } from "@/lib/sanity.image";
 
 type HeroProps = {
   title?: string;
   image?: any;
 };
 
-export default function Hero({ title, image }: HeroProps) {
-  return (
-    <section className="relative w-full h-[500px] flex items-center justify-center">
-      {image && (
-        <Image
-          src={urlFor(image).width(1600).url()}
-          alt={title || "Homepage hero image"}
-          fill
-          className="object-cover"
-        />
-      )}
-      <div className="absolute text-white text-center">
-        <h1 className="text-4xl font-bold">{title}</h1>
-      </div>
-    </section>
-  );
-}
+// export default function Hero({ title, image }: HeroProps) {
+//   return (
+//     <section className="relative w-full h-[500px] flex items-center justify-center">
+//       {image && (
+//         <Image
+//           src={urlFor(image).width(1600).url()}
+//           alt={title || "Homepage hero image"}
+//           fill
+//           className="object-cover"
+//         />
+//       )}
+//       <div className="absolute text-white text-center">
+//         <h1 className="text-4xl font-bold">{title}</h1>
+//       </div>
+//     </section>
+//   );
+// }
 
 

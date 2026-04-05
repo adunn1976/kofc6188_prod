@@ -11,10 +11,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               KofC Corpus Christi Council 6188
             </Link>
             <nav className="space-x-4">
-              <Link href="/">Home</Link> 
+              <Link href="/">Home</Link>
               <Link href="/programs">Programs</Link>
-              <Link href="/news">News</Link>
-              <Link href="/about">About</Link>
+              <Link href="/events">Events</Link>
+              <Link href="/officers">Officers</Link>
               <Link href="/contact">Contact</Link>
             </nav>
           </div>
