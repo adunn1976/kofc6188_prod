@@ -41,7 +41,7 @@ export const homepageQuery = `*[_type == "homepage"][0] {
 }`
 
 // Query for council officers
-export const officersQuery = `*[_type == "officer"] | order(order asc) {
+export const officersQuery = `*[_type == "officer"] | order(coalesce(order, 999) asc, name asc) {
   _id,
   name,
   position,

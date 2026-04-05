@@ -70,7 +70,7 @@ export default defineType({
       title: 'Display Order',
       type: 'number',
       description: 'Lower numbers appear first in the officer list.',
-      validation: (Rule) => Rule.required().min(1).integer(),
+      validation: (Rule) => Rule.min(1).integer(),
     },
   ],
   preview: {
