@@ -40,6 +40,18 @@ export const homepageQuery = `*[_type == "homepage"][0] {
   missionText
 }`
 
+// Query for council officers
+export const officersQuery = `*[_type == "officer"] | order(order asc) {
+  _id,
+  name,
+  position,
+  bio,
+  email,
+  phone,
+  image,
+  order
+}`
+
 
 
 
