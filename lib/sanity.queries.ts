@@ -29,6 +29,17 @@ export const latestEventsQuery = `*[_type == "event"] | order(date desc)[0...5] 
   location
 }`
 
+// Query for homepage content
+export const homepageQuery = `*[_type == "homepage"][0] {
+  _id,
+  heroTitle,
+  heroSubtitle,
+  heroText,
+  heroImage,
+  missionTitle,
+  missionText
+}`
+
 
 
 
