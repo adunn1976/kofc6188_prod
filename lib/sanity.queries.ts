@@ -17,7 +17,15 @@ export const singleProgramQuery = `*[_type == "program" && slug.current == $slug
   slug,
   description,
   content,
-  image
+  image,
+  "posts": *[_type == "programPost" && references(^._id)] | order(date desc) {
+    _id,
+    title,
+    slug,
+    excerpt,
+    image,
+    date
+  }
 }`
 
 // Query for latest events

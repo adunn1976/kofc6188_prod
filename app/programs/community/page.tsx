@@ -3,6 +3,7 @@ import { singleProgramQuery, latestEventsQuery } from '@/lib/sanity.queries'
 import { urlFor } from '@/lib/sanity.image'
 import Image from 'next/image'
 import Link from 'next/link'
+import ProgramPosts from '@/components/ProgramPosts'
 
 export default async function CommunityPage() {
   let program = null
@@ -50,6 +51,8 @@ export default async function CommunityPage() {
           <p className="text-purple-700">{program.description}</p>
         </div>
       )}
+
+      <ProgramPosts posts={program?.posts} />
 
       <section className="mt-12 border-t pt-8">
         <h2 className="text-2xl font-semibold mb-6">Latest Community Events</h2>

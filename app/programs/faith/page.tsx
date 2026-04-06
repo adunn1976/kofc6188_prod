@@ -2,6 +2,7 @@ import { client } from '@/lib/sanity.client'
 import { singleProgramQuery } from '@/lib/sanity.queries'
 import { urlFor } from '@/lib/sanity.image'
 import Image from 'next/image'
+import ProgramPosts from '@/components/ProgramPosts'
 
 export default async function FaithPage() {
   let program = null
@@ -47,6 +48,8 @@ export default async function FaithPage() {
           <p className="text-blue-700">{program.description}</p>
         </div>
       )}
+
+      <ProgramPosts posts={program?.posts} />
 
       <div className="bg-gray-100 p-4 rounded mt-8">
         <p>Program: <strong>{program?.title || 'Faith'}</strong></p>
