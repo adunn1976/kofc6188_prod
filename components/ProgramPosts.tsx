@@ -1,6 +1,37 @@
 import Image from 'next/image'
 import { urlFor } from '@/lib/sanity.image'
 
+function renderProgramPostBlock(block: any, index: number) {
+  if (!block || typeof block !== 'object') {
+    return null
+  }
+
+  if (block._type === 'image' && block.asset) {
+    return (
+      <div key={index} className="mb-4 overflow-hidden rounded-3xl">
+        <Image
+          src={urlFor(block).width(800).height(400).url()}
+          alt={block.alt || 'Program post image'}
+          width={800}
+          height={400}
+          className="w-full h-auto object-cover"
+        />
+      </div>
+    )
+  }
+
+  if (block._type === 'block' && Array.isArray(block.children)) {
+    const text = block.children.map((child: any) => child.text || '').join('')
+    return (
+      <p key={index} className="text-gray-700 mb-4">
+        {text}
+      </p>
+    )
+  }
+
+  return null
+}
+
 export default function ProgramPosts({ posts }: { posts?: any[] }) {
   if (!posts || posts.length === 0) {
     return null
@@ -28,7 +59,17 @@ export default function ProgramPosts({ posts }: { posts?: any[] }) {
                 {post.date ? new Date(post.date).toLocaleDateString() : 'No date'}
               </p>
               <h3 className="text-2xl font-semibold mb-3">{post.title}</h3>
-              <p className="text-gray-700 mb-4">{post.excerpt || 'No summary available.'}</p>
+              {post.excerpt ? (
+                <p className="text-gray-700 mb-4">{post.excerpt}</p>
+              ) : null}
+              {post.body ? (
+                <div className="mb-4">
+                  {post.body.map((block: any, index: number) => renderProgramPostBlock(block, index))}
+                </div>
+              ) : null}
+              {!post.excerpt && !post.body ? (
+                <p className="text-gray-700 mb-4">No summary available.</p>
+              ) : null}
               <p className="text-right text-sm text-blue-600">Program update</p>
             </div>
           </article>

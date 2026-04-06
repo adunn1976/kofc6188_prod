@@ -24,7 +24,8 @@ export const singleProgramQuery = `*[_type == "program" && slug.current == $slug
     slug,
     excerpt,
     image,
-    date
+    date,
+    body
   }
 }`
 
