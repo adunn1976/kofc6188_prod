@@ -9,7 +9,11 @@ export default defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
-      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'name',
+      title: 'Name',
+      type: 'string',
     },
     {
       name: 'slug',
@@ -28,8 +32,28 @@ export default defineType({
       rows: 3,
     },
     {
+      name: 'summary',
+      title: 'Summary',
+      type: 'text',
+      rows: 3,
+    },
+    {
+      name: 'text',
+      title: 'Text',
+      type: 'text',
+    },
+    {
       name: 'content',
       title: 'Content',
+      type: 'array',
+      of: [
+        { type: 'block' },
+        { type: 'image' }
+      ],
+    },
+    {
+      name: 'body',
+      title: 'Body',
       type: 'array',
       of: [
         { type: 'block' },
