@@ -57,9 +57,9 @@ export default async function HomePage() {
       {/* Featured Programs */}
       <section className="max-w-6xl mx-auto p-6">
         <h2 className="text-3xl font-bold text-center mb-6">Our Programs</h2>
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {programs.length > 0 ? (
-            programs.slice(0, 3).map((program: any) => (
+            programs.map((program: any) => (
               <div key={program._id} className="bg-white rounded-lg shadow p-6">
                 <h3 className="text-xl font-semibold mb-2">{program.title}</h3>
                 <p className="text-gray-600 mb-4">{program.description}</p>
@@ -88,6 +88,11 @@ export default async function HomePage() {
                 <h3 className="text-xl font-semibold mb-2">Community</h3>
                 <p className="text-gray-600 mb-4">Serving our local community through various initiatives.</p>
                 <Link href="/programs/community" className="text-blue-600 hover:underline">Learn More →</Link>
+              </div>
+              <div className="bg-white rounded-lg shadow p-6">
+                <h3 className="text-xl font-semibold mb-2">Life</h3>
+                <p className="text-gray-600 mb-4">Promoting and protecting the sanctity of human life.</p>
+                <Link href="/programs/life" className="text-blue-600 hover:underline">Learn More →</Link>
               </div>
             </>
           )}
