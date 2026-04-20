@@ -1,14 +1,17 @@
 import { client } from '@/lib/sanity.client'
-import { singleProgramQuery } from '@/lib/sanity.queries'
+import { singleProgramQuery, latestEventsQuery } from '@/lib/sanity.queries'
 import { urlFor } from '@/lib/sanity.image'
 import Image from 'next/image'
+import Link from 'next/link'
 import ProgramPosts from '@/components/ProgramPosts'
 
 export default async function LifePage() {
   let program = null
+  let events = []
 
   try {
     program = await client.fetch(singleProgramQuery, { slug: 'life' })
+    events = await client.fetch(latestEventsQuery)
   } catch (error) {
     console.error('Error fetching life program:', error)
   }
@@ -50,6 +53,42 @@ export default async function LifePage() {
       )}
 
       <ProgramPosts posts={program?.posts} />
+
+      <section className="mt-12 border-t pt-8">
+        <h2 className="text-2xl font-semibold mb-6">Latest Life Events</h2>
+        {events.length > 0 ? (
+          <div className="space-y-4">
+            {events.slice(0, 3).map((event: any) => (
+              <div key={event._id} className="bg-gray-50 rounded-lg p-6">
+                <h3 className="text-xl font-semibold mb-2">{event.title}</h3>
+                <div className="text-sm text-gray-600 mb-3">
+                  <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
+                  {event.location && <p><strong>Location:</strong> {event.location}</p>}
+                </div>
+                <p className="text-gray-700">{event.description}</p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="bg-gray-50 rounded-lg p-6">
+            <h3 className="text-xl font-semibold mb-2">Life Events</h3>
+            <div className="text-sm text-gray-600 mb-3">
+              <p><strong>Date:</strong> Coming Soon</p>
+              <p><strong>Location:</strong> To be announced</p>
+            </div>
+            <p className="text-gray-700">Event details will be displayed here once configured in the content management system.</p>
+          </div>
+        )}
+
+        <div className="mt-4">
+          <Link
+            href="/events"
+            className="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          >
+            View All Events →
+          </Link>
+        </div>
+      </section>
 
       <div className="bg-gray-100 p-4 rounded mt-8">
         <p>Program: <strong>{program?.title || 'Life'}</strong></p>
