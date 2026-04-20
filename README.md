@@ -1,44 +1,59 @@
 # Knights of Columbus Corpus Christi Council 6188
 
-Next.js + Sanity starter scaffold for **Knights of Columbus Corpus Christi Council 6188** (demo content included).
+Website for **Knights of Columbus Corpus Christi Council 6188** built with Next.js and powered by Sanity CMS.
 
-## One-click Deploy to Vercel
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/adunn1976/kofc6188)
+## Project Structure
 
-## Quick start (local)
+- `app/` — Next.js App Router site pages
+- `components/` — shared UI components
+- `lib/` — Sanity client, image helpers, and queries
+- `studio/` — dedicated Sanity Studio project and schemas
 
-1. Clone the repo:
-```bash
-git clone https://github.com/adunn1976/kofc6188
-cd kofc6188
-```
+## Local Development
 
-2. Copy env example and set your Sanity project ID:
-```bash
-cp .env.example .env.local
-# Edit .env.local and set NEXT_PUBLIC_SANITY_PROJECT_ID to your Sanity project ID
-```
+### Website
 
-3. Install deps and run:
 ```bash
 npm install
 npm run dev
 ```
 
-4. Sanity Studio:
+The site runs at `http://localhost:3000`.
+
+### Sanity Studio
+
 ```bash
-cd sanity
+cd studio
 npm install
 npm run dev
 ```
 
-## Contents
-- `app/` — Next.js app router pages (Home, Events, Officers, Contact)
-- `sanity/` — Sanity studio schemas and seed data
-- Demo content included (3 events, 6 officers)
+## Environment Variables
+
+Copy `.env.example` to `.env.local` and set at minimum:
+
+```bash
+NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
+NEXT_PUBLIC_SANITY_DATASET=production
+```
+
+The Studio also reads these values when running locally.
+
+## Content Managed in Sanity
+
+- Homepage content
+- Programs: Faith, Family, Community, Life
+- Program posts with rich text and images
+- Events linked to specific programs
+- Officers
+
+## Deployment
+
+- Main website deploys from the root project
+- Sanity Studio deploys from the `studio/` project separately
 
 ## Notes
-- Contact form logs submissions to console (no email sending configured).
-- Update `NEXT_PUBLIC_SANITY_PROJECT_ID` in `.env.local` after creating a Sanity project.
-- After pushing to GitHub, use the Deploy button above to deploy to Vercel.
+
+- Program pages show only events linked to that program
+- Contact form currently returns success but does not send email yet
 

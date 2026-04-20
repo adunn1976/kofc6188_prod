@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "seed": "node ./scripts/seed.js"
+    "lint": "next lint"
   },
   "dependencies": {
     "@sanity/client": "^7.20.0",
