@@ -38,6 +38,14 @@ export const latestEventsQuery = `*[_type == "event"] | order(date desc)[0...5] 
   location
 }`
 
+export const latestProgramEventsQuery = `*[_type == "event" && references($programId) && date >= now()] | order(date asc)[0...5] {
+  _id,
+  title,
+  date,
+  description,
+  location
+}`
+
 // Query for homepage content
 export const homepageQuery = `*[_type == "homepage"][0] {
   _id,

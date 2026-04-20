@@ -28,6 +28,13 @@ export default defineType({
       title: 'Location',
       type: 'string',
     },
+    {
+      name: 'program',
+      title: 'Program',
+      type: 'reference',
+      to: [{ type: 'program' }],
+      validation: (Rule) => Rule.required(),
+    },
   ],
   preview: {
     select: {

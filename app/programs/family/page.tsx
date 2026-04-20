@@ -1,5 +1,5 @@
 import { client } from '@/lib/sanity.client'
-import { singleProgramQuery, latestEventsQuery } from '@/lib/sanity.queries'
+import { singleProgramQuery, latestProgramEventsQuery } from '@/lib/sanity.queries'
 import { urlFor } from '@/lib/sanity.image'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -11,7 +11,9 @@ export default async function FamilyPage() {
 
   try {
     program = await client.fetch(singleProgramQuery, { slug: 'family' })
-    events = await client.fetch(latestEventsQuery)
+    if (program?._id) {
+      events = await client.fetch(latestProgramEventsQuery, { programId: program._id })
+    }
   } catch (error) {
     console.error('Error fetching family program:', error)
   }
