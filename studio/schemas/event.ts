@@ -40,12 +40,14 @@ export default defineType({
     select: {
       title: 'title',
       date: 'date',
+      programTitle: 'program.title',
     },
     prepare(selection) {
-      const { title, date } = selection
+      const { title, date, programTitle } = selection
+      const dateText = date ? new Date(date).toLocaleDateString() : ''
       return {
         title,
-        subtitle: date ? new Date(date).toLocaleDateString() : '',
+        subtitle: [programTitle, dateText].filter(Boolean).join(' — '),
       }
     },
   },
