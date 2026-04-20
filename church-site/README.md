@@ -24,6 +24,7 @@ For this project, **Next.js + Sanity + Vercel** is a strong choice.
 
 - New Next.js app scaffold in this folder (`church-site/`)
 - TypeScript + App Router + Tailwind enabled
+- Separate Sanity Studio scaffold in `church-site/studio/`
 - Ready to connect to Sanity and deploy on Vercel
 
 ## Local Development
@@ -36,6 +37,14 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
+
+### Sanity Studio (separate workspace)
+
+```bash
+cd studio
+npm install
+npm run dev
+```
 
 ## Suggested Project Structure (Next Steps)
 
