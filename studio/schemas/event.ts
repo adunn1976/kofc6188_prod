@@ -33,7 +33,7 @@ export default defineType({
       title: 'Program',
       type: 'reference',
       to: [{ type: 'program' }],
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().error('Please select a program for this event.'),
     },
   ],
   preview: {
