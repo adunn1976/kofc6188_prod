@@ -91,11 +91,6 @@ export default async function FamilyPage() {
           </Link>
         </div>
       </section>
-
-      <div className="bg-gray-100 p-4 rounded mt-8">
-        <p>Program: <strong>{program?.title || 'Family'}</strong></p>
-        <p>Last updated: {new Date().toISOString()}</p>
-      </div>
     </article>
   )
 }
