@@ -20,6 +20,8 @@
 
 # production
 /build
+/studio/dist
+/studio/.sanity
 
 # misc
 .DS_Store
