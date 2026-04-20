@@ -60,8 +60,28 @@ The Studio also reads these values when running locally.
 - If schema changes were made, redeploy the Studio project from `studio/`
 - If website code changed, redeploy the main site from the repository root
 - Verify `NEXT_PUBLIC_SANITY_PROJECT_ID` and `NEXT_PUBLIC_SANITY_DATASET` are set in Vercel for both projects
+- Verify `REVALIDATE_SECRET` is set in the main site Vercel project for Sanity webhook revalidation
 - After deployment, check the homepage, each program page, officers page, and events page
 - If a Sanity content update is visible locally but not in production, trigger a fresh Vercel redeploy of the main site
+
+## Sanity Webhook Setup
+
+Use a Sanity webhook so publishing content refreshes the website automatically without a full manual redeploy.
+
+1. In the main Vercel project, add an environment variable named `REVALIDATE_SECRET`
+2. Set it to a long random value
+3. Redeploy the main website once after adding the env var
+4. In Sanity project management, create a webhook for document publish events
+5. Point the webhook URL to:
+
+```text
+https://your-site-domain.com/api/revalidate?secret=YOUR_REVALIDATE_SECRET
+```
+
+6. Configure the webhook to trigger on create, update, and delete for published documents
+7. Use the production website domain for the webhook URL
+
+This project includes the revalidation endpoint at `/api/revalidate`, which refreshes the main public pages when Sanity content changes.
 
 ## Maintenance Checklist
 
