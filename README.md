@@ -2,6 +2,8 @@
 
 Website for **Knights of Columbus Corpus Christi Council 6188** built with Next.js and powered by Sanity CMS.
 
+For the non-technical content handoff, see [CONTENT_EDITOR_GUIDE.md](CONTENT_EDITOR_GUIDE.md).
+
 ## Project Structure
 
 - `app/` — Next.js App Router site pages
