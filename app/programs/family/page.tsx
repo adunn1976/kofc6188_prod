@@ -19,7 +19,7 @@ export default async function FamilyPage() {
   }
 
   return (
-    <article className="max-w-4xl mx-auto py-12 px-4">
+    <article className="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-12">
       {program?.image && (
         <div className="mb-8">
           <Image
@@ -32,7 +32,7 @@ export default async function FamilyPage() {
         </div>
       )}
 
-      <h1 className="text-4xl font-bold mb-6">
+      <h1 className="mb-6 text-3xl font-bold sm:text-4xl">
         {program?.title || 'Family Program'}
       </h1>
 
@@ -57,7 +57,7 @@ export default async function FamilyPage() {
       <ProgramPosts posts={program?.posts} />
 
       <section className="mt-12 border-t pt-8">
-        <h2 className="text-2xl font-semibold mb-6">Latest Family Events</h2>
+        <h2 className="mb-6 text-2xl font-semibold">Latest Family Events</h2>
         {events.length > 0 ? (
           <div className="space-y-4">
             {events.slice(0, 3).map((event: any) => (

@@ -39,10 +39,10 @@ export default function ProgramPosts({ posts }: { posts?: any[] }) {
 
   return (
     <section className="mt-12">
-      <h2 className="text-3xl font-semibold mb-6">Recent Program Posts</h2>
+      <h2 className="mb-6 text-2xl font-semibold sm:text-3xl">Recent Program Posts</h2>
       <div className="grid gap-6 md:grid-cols-2">
         {posts.map((post) => (
-          <article key={post._id} className="bg-white rounded-3xl shadow p-6 overflow-hidden">
+          <article key={post._id} className="overflow-hidden rounded-3xl bg-white p-5 shadow sm:p-6">
             {post.image ? (
               <div className="mb-4 overflow-hidden rounded-3xl">
                 <Image
@@ -58,7 +58,7 @@ export default function ProgramPosts({ posts }: { posts?: any[] }) {
               <p className="text-sm text-gray-500 mb-2">
                 {post.date ? new Date(post.date).toLocaleDateString() : 'No date'}
               </p>
-              <h3 className="text-2xl font-semibold mb-3">{post.title}</h3>
+              <h3 className="mb-3 text-xl font-semibold sm:text-2xl">{post.title}</h3>
               {post.excerpt ? (
                 <p className="text-gray-700 mb-4">{post.excerpt}</p>
               ) : null}

@@ -4,9 +4,9 @@ export default function ProgramsPage() {
   const programs = ["Faith", "Family", "Community", "Life"];
 
   return (
-    <main className="max-w-5xl mx-auto py-16 px-4 text-center">
-      <h1 className="text-4xl font-bold mb-8">Our Programs</h1>
-      <p className="text-lg mb-12 text-gray-600">
+    <main className="mx-auto max-w-5xl px-4 py-12 text-center sm:px-6 sm:py-16">
+      <h1 className="mb-6 text-3xl font-bold sm:mb-8 sm:text-4xl">Our Programs</h1>
+      <p className="mb-10 text-base text-gray-600 sm:mb-12 sm:text-lg">
         The Knights of Columbus council focuses on four key areas of charitable and spiritual growth.
       </p>
 
@@ -15,7 +15,7 @@ export default function ProgramsPage() {
           <Link
             key={prog}
             href={`/programs/${prog.toLowerCase()}`}
-            className="border rounded-xl p-6 hover:shadow-lg transition bg-white"
+            className="rounded-xl border bg-white p-5 transition hover:shadow-lg sm:p-6"
           >
             <h2 className="text-2xl font-semibold mb-2">{prog}</h2>
             <p className="text-gray-600">

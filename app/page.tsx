@@ -19,7 +19,7 @@ export default async function HomePage() {
   return (
     <main className="flex flex-col items-center">
       {/* Hero */}
-      <section className="relative w-full h-[500px] flex items-center justify-center">
+      <section className="relative flex h-[380px] w-full items-center justify-center sm:h-[440px] lg:h-[500px]">
         {homepageData?.heroImage && (
           <Image
             src={urlFor(homepageData.heroImage).width(1600).height(500).url()}
@@ -29,25 +29,25 @@ export default async function HomePage() {
             priority
           />
         )}
-        <div className="absolute inset-0 bg-black/50 flex flex-col justify-center items-center text-white text-center px-4">
-          <h1 className="text-5xl font-bold mb-6">
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 px-4 text-center text-white">
+          <h1 className="mb-4 max-w-4xl text-3xl font-bold leading-tight sm:text-4xl lg:mb-6 lg:text-5xl">
             {homepageData?.heroTitle || "Welcome to Knights of Columbus"}
           </h1>
-          <p className="text-xl mb-4">
+          <p className="mb-3 text-lg sm:text-xl">
             {homepageData?.heroSubtitle || "Corpus Christi Council 6188"}
           </p>
-          <p className="text-lg">
+          <p className="max-w-2xl text-base sm:text-lg">
             {homepageData?.heroText || "Faith • Family • Community • Life"}
           </p>
         </div>
       </section>
 
       {/* Intro Section */}
-      <section className="max-w-4xl mx-auto p-6 text-center py-16">
-        <h2 className="text-3xl font-bold mb-6">
+      <section className="mx-auto max-w-4xl px-4 py-12 text-center sm:px-6 sm:py-16">
+        <h2 className="mb-4 text-2xl font-bold sm:mb-6 sm:text-3xl">
           {homepageData?.missionTitle || "Our Mission"}
         </h2>
-        <p className="text-lg text-gray-700">
+        <p className="text-base leading-7 text-gray-700 sm:text-lg">
           {homepageData?.missionText ||
             "The Knights of Columbus is a Catholic fraternal organization dedicated to serving our community through faith, family, and charitable works."
           }
@@ -55,17 +55,17 @@ export default async function HomePage() {
       </section>
 
       {/* Featured Programs */}
-      <section className="max-w-6xl mx-auto p-6">
-        <h2 className="text-3xl font-bold text-center mb-6">Our Programs</h2>
+      <section className="mx-auto w-full max-w-6xl px-4 pb-4 sm:px-6">
+        <h2 className="mb-6 text-center text-2xl font-bold sm:text-3xl">Our Programs</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {programs.length > 0 ? (
             programs.map((program: any) => (
-              <div key={program._id} className="bg-white rounded-lg shadow p-6">
+              <div key={program._id} className="rounded-2xl bg-white p-5 shadow sm:p-6">
                 <h3 className="text-xl font-semibold mb-2">{program.title}</h3>
                 <p className="text-gray-600 mb-4">{program.description}</p>
                 <Link
                   href={`/programs/${program.slug?.current || program.title.toLowerCase()}`}
-                  className="text-blue-600 hover:underline"
+                  className="font-medium text-blue-600 hover:underline"
                 >
                   Learn More →
                 </Link>
@@ -74,22 +74,22 @@ export default async function HomePage() {
           ) : (
             // Fallback content if no programs in Sanity
             <>
-              <div className="bg-white rounded-lg shadow p-6">
+              <div className="rounded-2xl bg-white p-5 shadow sm:p-6">
                 <h3 className="text-xl font-semibold mb-2">Faith</h3>
                 <p className="text-gray-600 mb-4">Spiritual growth and development programs.</p>
                 <Link href="/programs/faith" className="text-blue-600 hover:underline">Learn More →</Link>
               </div>
-              <div className="bg-white rounded-lg shadow p-6">
+              <div className="rounded-2xl bg-white p-5 shadow sm:p-6">
                 <h3 className="text-xl font-semibold mb-2">Family</h3>
                 <p className="text-gray-600 mb-4">Support for families in our community.</p>
                 <Link href="/programs/family" className="text-blue-600 hover:underline">Learn More →</Link>
               </div>
-              <div className="bg-white rounded-lg shadow p-6">
+              <div className="rounded-2xl bg-white p-5 shadow sm:p-6">
                 <h3 className="text-xl font-semibold mb-2">Community</h3>
                 <p className="text-gray-600 mb-4">Serving our local community through various initiatives.</p>
                 <Link href="/programs/community" className="text-blue-600 hover:underline">Learn More →</Link>
               </div>
-              <div className="bg-white rounded-lg shadow p-6">
+              <div className="rounded-2xl bg-white p-5 shadow sm:p-6">
                 <h3 className="text-xl font-semibold mb-2">Life</h3>
                 <p className="text-gray-600 mb-4">Promoting and protecting the sanctity of human life.</p>
                 <Link href="/programs/life" className="text-blue-600 hover:underline">Learn More →</Link>
@@ -97,10 +97,10 @@ export default async function HomePage() {
             </>
           )}
         </div>
-        <div className="text-center mt-6">
+        <div className="mt-6 text-center">
           <Link
             href="/programs"
-            className="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
+            className="inline-block rounded-lg bg-blue-600 px-6 py-3 text-white hover:bg-blue-700"
           >
             View All Programs
           </Link>

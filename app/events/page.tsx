@@ -12,13 +12,13 @@ export default async function EventsPage() {
   }
 
   return (
-    <main className="max-w-4xl mx-auto py-12 px-4">
-      <h1 className="text-3xl font-bold mb-6">Upcoming Events</h1>
+    <main className="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-12">
+      <h1 className="mb-6 text-3xl font-bold">Upcoming Events</h1>
 
       {events.length > 0 ? (
         <div className="space-y-6">
           {events.map((event: any) => (
-            <div key={event._id} className="bg-white border rounded-lg p-6 shadow">
+            <div key={event._id} className="rounded-lg border bg-white p-5 shadow sm:p-6">
               <h2 className="text-xl font-semibold mb-2">{event.title}</h2>
               <p className="text-gray-600 mb-2">
                 {new Date(event.date).toLocaleDateString()}
