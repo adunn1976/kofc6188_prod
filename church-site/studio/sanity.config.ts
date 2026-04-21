@@ -6,8 +6,8 @@ export default defineConfig({
   name: 'church-site-studio',
   title: 'Church Site Studio',
 
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'your_project_id',
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
+  projectId: 's5he2gec',
+  dataset: 'production',
 
   plugins: [deskTool()],
 
