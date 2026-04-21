@@ -6,7 +6,7 @@ export default defineConfig({
   name: 'church-site-studio',
   title: 'Church Site Studio',
 
-  projectId: 's5he2gec',
+  projectId: 'jjaqbqvi',
   dataset: 'production',
 
   plugins: [deskTool()],
