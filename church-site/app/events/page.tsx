@@ -1,5 +1,6 @@
 import { client } from '@/lib/sanity.client'
 import { upcomingEventsQuery } from '@/lib/sanity.queries'
+import Link from 'next/link'
 
 export default async function EventsPage() {
   let events: any[] = []
@@ -19,13 +20,22 @@ export default async function EventsPage() {
         {events.length > 0 ? (
           events.map((event) => (
             <article key={event._id} className="rounded-xl border border-slate-200 bg-white p-5">
-              <h2 className="text-lg font-semibold text-slate-900">{event.title}</h2>
+              <h2 className="text-lg font-semibold text-slate-900">
+                <Link href={`/events/${event.slug?.current || ''}`} className="hover:text-blue-700 hover:underline">
+                  {event.title}
+                </Link>
+              </h2>
               <p className="mt-1 text-xs text-slate-500">
                 {new Date(event.date).toLocaleDateString()}
                 {event.location ? ` • ${event.location}` : ''}
                 {event.ministryTitle ? ` • ${event.ministryTitle}` : ''}
               </p>
               {event.summary ? <p className="mt-3 text-sm text-slate-600">{event.summary}</p> : null}
+              {event.slug?.current ? (
+                <Link href={`/events/${event.slug.current}`} className="mt-2 inline-block text-sm font-semibold text-blue-700 hover:underline">
+                  View details →
+                </Link>
+              ) : null}
             </article>
           ))
         ) : (

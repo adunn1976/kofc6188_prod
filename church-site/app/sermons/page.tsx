@@ -1,5 +1,6 @@
 import { client } from '@/lib/sanity.client'
 import { latestSermonsQuery } from '@/lib/sanity.queries'
+import Link from 'next/link'
 
 export default async function SermonsPage() {
   let sermons: any[] = []
@@ -19,7 +20,11 @@ export default async function SermonsPage() {
         {sermons.length > 0 ? (
           sermons.map((sermon) => (
             <article key={sermon._id} className="rounded-xl border border-slate-200 bg-white p-5">
-              <h2 className="text-lg font-semibold text-slate-900">{sermon.title}</h2>
+              <h2 className="text-lg font-semibold text-slate-900">
+                <Link href={`/sermons/${sermon.slug?.current || ''}`} className="hover:text-blue-700 hover:underline">
+                  {sermon.title}
+                </Link>
+              </h2>
               <p className="mt-1 text-xs text-slate-500">
                 {new Date(sermon.date).toLocaleDateString()} {sermon.speaker ? `• ${sermon.speaker}` : ''}
                 {sermon.scripture ? ` • ${sermon.scripture}` : ''}
@@ -29,6 +34,13 @@ export default async function SermonsPage() {
                 <a href={sermon.mediaUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-block text-sm font-medium text-blue-700 hover:underline">
                   Listen / Watch
                 </a>
+              ) : null}
+              {sermon.slug?.current ? (
+                <div>
+                  <Link href={`/sermons/${sermon.slug.current}`} className="mt-2 inline-block text-sm font-semibold text-blue-700 hover:underline">
+                    Read full sermon →
+                  </Link>
+                </div>
               ) : null}
             </article>
           ))

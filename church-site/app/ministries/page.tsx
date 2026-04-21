@@ -2,6 +2,7 @@ import { client } from '@/lib/sanity.client'
 import { ministriesQuery } from '@/lib/sanity.queries'
 import { urlFor } from '@/lib/sanity.image'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default async function MinistriesPage() {
   let ministries: any[] = []
@@ -31,7 +32,11 @@ export default async function MinistriesPage() {
                 />
               ) : null}
               <div className="p-5">
-                <h2 className="text-lg font-semibold text-slate-900">{ministry.title}</h2>
+                <h2 className="text-lg font-semibold text-slate-900">
+                  <Link href={`/ministries/${ministry.slug?.current || ''}`} className="hover:text-blue-700 hover:underline">
+                    {ministry.title}
+                  </Link>
+                </h2>
                 {ministry.summary ? <p className="mt-2 text-sm text-slate-600">{ministry.summary}</p> : null}
                 {ministry.contactName || ministry.contactEmail ? (
                   <p className="mt-3 text-xs text-slate-500">
@@ -39,6 +44,11 @@ export default async function MinistriesPage() {
                     {ministry.contactName && ministry.contactEmail ? ' • ' : ''}
                     {ministry.contactEmail || ''}
                   </p>
+                ) : null}
+                {ministry.slug?.current ? (
+                  <Link href={`/ministries/${ministry.slug.current}`} className="mt-3 inline-block text-sm font-semibold text-blue-700 hover:underline">
+                    Learn more →
+                  </Link>
                 ) : null}
               </div>
             </article>
