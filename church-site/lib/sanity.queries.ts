@@ -8,6 +8,12 @@ export const homepageQuery = `*[_type == "homepage"][0] {
   primaryCtaUrl
 }`
 
+export const aboutPageQuery = `*[_type == "about"][0] {
+  mission,
+  vision,
+  values
+}`
+
 export const latestAnnouncementsQuery = `*[_type == "announcement"] | order(date desc)[0...3] {
   _id,
   title,
