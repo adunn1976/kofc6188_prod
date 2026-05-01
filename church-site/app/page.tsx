@@ -1,8 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { client } from '@/lib/sanity.client'
-import RichText from '@/components/RichText'
-import { homepageQuery, latestAnnouncementsQuery, latestSermonsQuery, upcomingEventsQuery } from '@/lib/sanity.queries'
+import { aboutPageQuery, homepageQuery, latestAnnouncementsQuery, latestSermonsQuery, upcomingEventsQuery } from '@/lib/sanity.queries'
 import { urlFor } from '@/lib/sanity.image'
 
 type PortableTextChild = {
@@ -23,9 +22,7 @@ type ServiceTime = {
 type HomepageData = {
   heroTitle?: string | PortableTextBlock[]
   heroSubtitle?: string | PortableTextBlock[]
-  aboutSectionTitle?: string | PortableTextBlock[]
   introText?: string | PortableTextBlock[]
-  aboutSectionBody?: PortableTextBlock[]
   heroImage?: {
     alt?: string
   }
@@ -57,6 +54,11 @@ type Event = {
   location?: string
 }
 
+type AboutPageContent = {
+  homepageSectionTitle?: string
+  homepageSectionText?: string
+}
+
 function asText(value: string | PortableTextBlock[] | undefined) {
   if (!value) return ''
   if (typeof value === 'string') return value
@@ -77,24 +79,34 @@ function asText(value: string | PortableTextBlock[] | undefined) {
 
 export default async function HomePage() {
   let homepage: HomepageData | null = null
+  let aboutContent: AboutPageContent = {}
   let announcements: Announcement[] = []
   let sermons: Sermon[] = []
   let events: Event[] = []
 
   try {
-    homepage = await client.fetch(homepageQuery)
-    announcements = await client.fetch(latestAnnouncementsQuery)
-    sermons = await client.fetch(latestSermonsQuery)
-    events = await client.fetch(upcomingEventsQuery)
+    const [homepageData, aboutData, announcementsData, sermonsData, eventsData] = await Promise.all([
+      client.fetch(homepageQuery),
+      client.fetch(aboutPageQuery),
+      client.fetch(latestAnnouncementsQuery),
+      client.fetch(latestSermonsQuery),
+      client.fetch(upcomingEventsQuery),
+    ])
+
+    homepage = homepageData
+    aboutContent = aboutData || {}
+    announcements = announcementsData || []
+    sermons = sermonsData || []
+    events = eventsData || []
   } catch (error) {
     console.error('Error fetching church homepage content:', error)
   }
 
-  const aboutSectionTitle = asText(homepage?.aboutSectionTitle) || 'About Our Church'
-  const hasManagedAboutBody = Array.isArray(homepage?.aboutSectionBody) && homepage.aboutSectionBody.length > 0
+  const aboutSectionTitle = aboutContent.homepageSectionTitle || 'About Our Church'
   const aboutFallbackText =
     asText(homepage?.introText) ||
     'We are a welcoming church committed to worship, discipleship, and loving our community. Whether you are new to church or have followed Christ for years, we would love to walk with you.'
+  const aboutSectionText = aboutContent.homepageSectionText || aboutFallbackText
 
   return (
     <div>
@@ -133,13 +145,7 @@ export default async function HomePage() {
         <div className="grid gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl">{aboutSectionTitle}</h2>
-            {hasManagedAboutBody ? (
-              <div className="mt-4 text-slate-700">
-                <RichText value={homepage.aboutSectionBody} />
-              </div>
-            ) : (
-              <p className="mt-4 leading-7 text-slate-700">{aboutFallbackText}</p>
-            )}
+            <p className="mt-4 leading-7 text-slate-700">{aboutSectionText}</p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link href="/about" className="rounded bg-blue-700 px-4 py-2 text-white hover:bg-blue-800">Learn More</Link>
               <Link href="/contact" className="rounded border border-slate-300 bg-white px-4 py-2 text-slate-700 hover:bg-slate-100">Contact Us</Link>
