@@ -104,6 +104,7 @@ export default async function HomePage() {
     'We are a welcoming church committed to worship, discipleship, and loving our community. Whether you are new to church or have followed Christ for years, we would love to walk with you.'
   const aboutSectionText = homepage?.aboutSection?.text || aboutFallbackText
   const serviceTimes = homepage?.serviceTimes ?? []
+  const fallbackHeroImage = '/images/presbyterian-church-havre-de-grace.jpg'
 
   return (
     <div>
@@ -117,7 +118,13 @@ export default async function HomePage() {
             priority
           />
         ) : (
-          <div className="h-full w-full bg-gradient-to-r from-blue-900 to-blue-700" />
+          <Image
+            src={fallbackHeroImage}
+            alt="The Presbyterian Church of Havre de Grace"
+            fill
+            className="object-cover"
+            priority
+          />
         )}
         <div className="absolute inset-0 bg-black/45" />
         <div className="absolute inset-0 mx-auto flex max-w-6xl flex-col justify-center px-4 text-white sm:px-6">
