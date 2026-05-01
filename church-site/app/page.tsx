@@ -103,6 +103,7 @@ export default async function HomePage() {
     asText(homepage?.introText) ||
     'We are a welcoming church committed to worship, discipleship, and loving our community. Whether you are new to church or have followed Christ for years, we would love to walk with you.'
   const aboutSectionText = homepage?.aboutSection?.text || aboutFallbackText
+  const serviceTimes = homepage?.serviceTimes ?? []
 
   return (
     <div>
@@ -150,8 +151,8 @@ export default async function HomePage() {
           <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
             <h3 className="text-lg font-semibold text-slate-900">Service Times</h3>
             <ul className="mt-3 space-y-2 text-sm text-slate-700">
-              {homepage?.serviceTimes?.length > 0 ? (
-                homepage.serviceTimes.map((item: ServiceTime, idx: number) => (
+              {serviceTimes.length > 0 ? (
+                serviceTimes.map((item: ServiceTime, idx: number) => (
                   <li key={idx}>
                     <span className="font-medium">{item.day || 'Sunday'}:</span> {item.time || '9:00 AM'}
                     {item.label ? ` (${item.label})` : ''}
