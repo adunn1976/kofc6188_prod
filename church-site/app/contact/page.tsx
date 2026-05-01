@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { Phone } from 'lucide-react'
 
 export default function ContactPage() {
   return (
@@ -10,7 +11,10 @@ export default function ContactPage() {
         <div className="rounded-xl border border-slate-200 bg-white p-5">
           <h2 className="text-lg font-semibold text-slate-900">The Presbyterian Church of Havre de Grace</h2>
           <p className="mt-2 text-sm text-slate-600">551 Franklin St, Havre De Grace, MD 21078</p>
-          <p className="mt-1 text-sm text-slate-600">(410) 939-3611</p>
+          <p className="mt-1 inline-flex items-center gap-2 text-sm text-slate-600">
+            <Phone size={14} aria-hidden="true" />
+            <span>(410) 939-3611</span>
+          </p>
           <p className="mt-3">
             <Link
               href="https://www.google.com/maps/search/551+Franklin+St,+Havre+De+Grace,+MD+21078"
