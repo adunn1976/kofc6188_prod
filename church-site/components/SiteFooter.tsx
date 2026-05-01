@@ -14,7 +14,6 @@ export default function SiteFooter() {
           <Mail size={14} aria-hidden="true" />
           <a href="mailto:office@pchdg.org" className="hover:underline">office@pchdg.org</a>
         </p>
-        <p className="mt-1">Sunday Worship: 9:00 AM &amp; 11:00 AM</p>
         <p className="mt-4">© {new Date().getFullYear()} The Presbyterian Church of Havre de Grace. All rights reserved.</p>
       </div>
     </footer>
