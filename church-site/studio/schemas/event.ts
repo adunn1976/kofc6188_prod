@@ -41,6 +41,13 @@ export default defineType({
       to: [{ type: 'ministry' }],
     },
     {
+      name: 'featuredOnHomepage',
+      title: 'Feature on Homepage',
+      type: 'boolean',
+      description: 'When enabled, this event appears in the Upcoming Events section on the homepage.',
+      initialValue: false,
+    },
+    {
       name: 'summary',
       title: 'Summary',
       type: 'text',

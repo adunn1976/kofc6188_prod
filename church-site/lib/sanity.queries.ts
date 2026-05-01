@@ -51,7 +51,7 @@ export const sermonBySlugQuery = `*[_type == "sermon" && slug.current == $slug][
   body
 }`
 
-export const upcomingEventsQuery = `*[_type == "event" && date >= now()] | order(date asc)[0...8] {
+export const upcomingEventsQuery = `*[_type == "event" && featuredOnHomepage == true] | order(date asc) {
   _id,
   title,
   slug,
