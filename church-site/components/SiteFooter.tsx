@@ -1,4 +1,4 @@
-import { Phone } from 'lucide-react'
+import { Mail, Phone } from 'lucide-react'
 
 export default function SiteFooter() {
   return (
@@ -9,6 +9,10 @@ export default function SiteFooter() {
         <p className="mt-1 inline-flex items-center gap-2">
           <Phone size={14} aria-hidden="true" />
           <span>(410) 939-3611</span>
+        </p>
+        <p className="mt-1 inline-flex items-center gap-2">
+          <Mail size={14} aria-hidden="true" />
+          <a href="mailto:office@pchdg.org" className="hover:underline">office@pchdg.org</a>
         </p>
         <p className="mt-1">Sunday Worship: 9:00 AM &amp; 11:00 AM</p>
         <p className="mt-4">© {new Date().getFullYear()} The Presbyterian Church of Havre de Grace. All rights reserved.</p>

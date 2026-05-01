@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Phone } from 'lucide-react'
+import { Mail, Phone } from 'lucide-react'
 
 export default function ContactPage() {
   return (
@@ -14,6 +14,10 @@ export default function ContactPage() {
           <p className="mt-1 inline-flex items-center gap-2 text-sm text-slate-600">
             <Phone size={14} aria-hidden="true" />
             <span>(410) 939-3611</span>
+          </p>
+          <p className="mt-1 inline-flex items-center gap-2 text-sm text-slate-600">
+            <Mail size={14} aria-hidden="true" />
+            <a href="mailto:office@pchdg.org" className="hover:underline">office@pchdg.org</a>
           </p>
           <p className="mt-3">
             <Link
