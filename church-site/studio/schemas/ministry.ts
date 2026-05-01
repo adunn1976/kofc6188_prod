@@ -2,7 +2,7 @@ import { defineType } from 'sanity'
 
 export default defineType({
   name: 'ministry',
-  title: 'Ministry',
+  title: 'Mission & Outreach',
   type: 'document',
   fields: [
     {
