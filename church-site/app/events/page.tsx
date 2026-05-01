@@ -1,12 +1,22 @@
 import { client } from '@/lib/sanity.client'
-import { upcomingEventsQuery } from '@/lib/sanity.queries'
+import { allEventsQuery } from '@/lib/sanity.queries'
 import Link from 'next/link'
 
+type EventListItem = {
+  _id: string
+  title: string
+  slug?: { current?: string }
+  date: string
+  location?: string
+  ministryTitle?: string
+  summary?: string
+}
+
 export default async function EventsPage() {
-  let events: any[] = []
+  let events: EventListItem[] = []
 
   try {
-    events = await client.fetch(upcomingEventsQuery)
+    events = (await client.fetch(allEventsQuery)) || []
   } catch (error) {
     console.error('Error fetching events:', error)
   }
@@ -14,7 +24,7 @@ export default async function EventsPage() {
   return (
     <section className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-12">
       <h1 className="text-3xl font-bold text-slate-900 sm:text-4xl">Events</h1>
-      <p className="mt-4 text-slate-700">See what’s coming up in the life of our church.</p>
+      <p className="mt-4 text-slate-700">See all events in the life of our church, including upcoming and past gatherings.</p>
 
       <div className="mt-8 space-y-4">
         {events.length > 0 ? (
@@ -40,7 +50,7 @@ export default async function EventsPage() {
           ))
         ) : (
           <article className="rounded-xl border border-slate-200 bg-white p-5 text-sm text-slate-600">
-            Upcoming events will appear here once published in Sanity Studio.
+            Events will appear here once published in Sanity Studio.
           </article>
         )}
       </div>
