@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
-import { Facebook, Menu, X } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 
 const links = [
   { href: '/', label: 'Home' },
@@ -19,6 +19,14 @@ const links = [
 ]
 
 const facebookUrl = 'https://www.facebook.com/presbyterianchurchhdg'
+
+function FacebookIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" className="h-[18px] w-[18px] fill-current">
+      <path d="M13.5 21v-8.2h2.8l.4-3.2h-3.2V7.6c0-.9.3-1.6 1.6-1.6h1.7V3.1c-.3 0-1.3-.1-2.4-.1-2.4 0-4.1 1.4-4.1 4.1v2.5H8v3.2h2.8V21h2.7Z" />
+    </svg>
+  )
+}
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false)
@@ -41,7 +49,7 @@ export default function SiteHeader() {
             aria-label="Visit our Facebook page"
             className="shrink-0 rounded-full border border-white/25 p-2 text-white transition-colors hover:bg-white/10"
           >
-            <Facebook size={18} aria-hidden="true" />
+            <FacebookIcon />
           </a>
         </div>
       </div>
