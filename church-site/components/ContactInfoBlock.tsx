@@ -7,6 +7,7 @@ type ContactInfoBlockProps = {
   email?: string
   directionsUrl?: string
   className?: string
+  variant?: 'default' | 'inverse'
 }
 
 export default function ContactInfoBlock({
@@ -16,21 +17,30 @@ export default function ContactInfoBlock({
   email,
   directionsUrl,
   className,
+  variant = 'default',
 }: ContactInfoBlockProps) {
+  const isInverse = variant === 'inverse'
+  const nameClassName = isInverse ? 'font-medium text-white' : 'font-medium text-slate-700'
+  const bodyClassName = isInverse ? 'text-sm text-blue-100' : 'text-sm text-slate-600'
+  const emailClassName = isInverse ? 'hover:text-white hover:underline' : 'hover:underline'
+  const directionsClassName = isInverse
+    ? 'text-sm font-semibold text-white hover:text-blue-100 hover:underline'
+    : 'text-sm font-semibold text-blue-700 hover:underline'
+
   return (
     <div className={className}>
-      {name ? <p className="font-medium text-slate-700">{name}</p> : null}
-      {address ? <p className="mt-1 text-sm text-slate-600">{address}</p> : null}
+      {name ? <p className={nameClassName}>{name}</p> : null}
+      {address ? <p className={`mt-1 ${bodyClassName}`}>{address}</p> : null}
       {phone ? (
-        <p className="mt-1 flex items-center gap-2 text-sm text-slate-600">
+        <p className={`mt-1 flex items-center gap-2 ${bodyClassName}`}>
           <Phone size={14} aria-hidden="true" />
           <span>{phone}</span>
         </p>
       ) : null}
       {email ? (
-        <p className="mt-1 flex items-center gap-2 text-sm text-slate-600">
+        <p className={`mt-1 flex items-center gap-2 ${bodyClassName}`}>
           <Mail size={14} aria-hidden="true" />
-          <a href={`mailto:${email}`} className="hover:underline">{email}</a>
+          <a href={`mailto:${email}`} className={emailClassName}>{email}</a>
         </p>
       ) : null}
       {directionsUrl ? (
@@ -39,7 +49,7 @@ export default function ContactInfoBlock({
             href={directionsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm font-semibold text-blue-700 hover:underline"
+            className={directionsClassName}
           >
             Get Directions →
           </a>
