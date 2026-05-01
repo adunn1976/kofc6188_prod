@@ -108,7 +108,7 @@ export default async function HomePage() {
 
   return (
     <div>
-      <section className="relative h-[380px] w-full sm:h-[450px]">
+      <section className="relative h-[320px] w-full sm:h-[450px]">
         {homepage?.heroImage ? (
           <Image
             src={urlFor(homepage.heroImage).width(1800).height(900).url()}
@@ -128,16 +128,16 @@ export default async function HomePage() {
         )}
         <div className="absolute inset-0 bg-black/45" />
         <div className="absolute inset-0 mx-auto flex max-w-6xl flex-col justify-center px-4 text-white sm:px-6">
-          <h1 className="max-w-3xl text-3xl font-bold leading-tight sm:text-5xl">
+          <h1 className="max-w-3xl text-2xl font-bold leading-tight sm:text-5xl">
             {asText(homepage?.heroTitle) || 'Welcome to Our Church Family'}
           </h1>
-          <p className="mt-3 max-w-2xl text-base sm:text-xl">
+          <p className="mt-3 max-w-2xl text-sm sm:text-xl">
             {asText(homepage?.heroSubtitle) || 'A Christ-centered community for worship, growth, and service.'}
           </p>
           <div className="mt-6">
             <Link
               href={homepage?.primaryCtaUrl || '/worship'}
-              className="inline-block rounded bg-white px-5 py-3 font-semibold text-blue-900 hover:bg-blue-50"
+              className="inline-flex w-full items-center justify-center rounded bg-white px-5 py-3 font-semibold text-blue-900 hover:bg-blue-50 sm:inline-flex sm:w-auto"
             >
               {asText(homepage?.primaryCtaLabel) || 'Plan Your Visit'}
             </Link>
@@ -185,7 +185,7 @@ export default async function HomePage() {
               <p className="text-xs font-medium uppercase tracking-wide text-blue-700">
                 {new Date(event.date).toLocaleDateString()}
               </p>
-              <h3 className="mt-2 text-lg font-semibold text-slate-900">{event.title}</h3>
+              <h3 className="mt-2 break-words text-lg font-semibold text-slate-900">{event.title}</h3>
               <p className="mt-2 text-sm text-slate-600">{event.summary || 'Join us for this upcoming church event.'}</p>
               <p className="mt-3 text-xs text-slate-500">{event.location || 'Church Campus'}</p>
             </article>
