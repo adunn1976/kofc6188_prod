@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { client } from '@/lib/sanity.client'
 import RichText from '@/components/RichText'
+import ContactInfoBlock from '@/components/ContactInfoBlock'
 import { bayFellowshipHallRentalQuery } from '@/lib/sanity.queries'
 
 type RentalPageContent = {
@@ -67,9 +68,7 @@ export default async function BayFellowshipHallRentalPage() {
 
       <div className="mt-8 rounded-xl border border-slate-200 bg-white p-6">
         <h2 className="text-xl font-semibold text-slate-900">Contact</h2>
-        <p className="mt-3 text-sm text-slate-700">{contactName}</p>
-        <p className="mt-1 text-sm text-slate-700">{contactPhone}</p>
-        <p className="mt-1 text-sm text-slate-700">{contactEmail}</p>
+        <ContactInfoBlock className="mt-3" name={contactName} phone={contactPhone} email={contactEmail} />
 
         <Link
           href={ctaUrl}

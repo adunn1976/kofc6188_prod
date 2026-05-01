@@ -1,5 +1,4 @@
-import Link from 'next/link'
-import { Mail, Phone } from 'lucide-react'
+import ContactInfoBlock from '@/components/ContactInfoBlock'
 
 export default function ContactPage() {
   return (
@@ -10,25 +9,13 @@ export default function ContactPage() {
       <div className="mt-8 grid gap-6 md:grid-cols-2">
         <div className="rounded-xl border border-slate-200 bg-white p-5">
           <h2 className="text-lg font-semibold text-slate-900">The Presbyterian Church of Havre de Grace</h2>
-          <p className="mt-2 text-sm text-slate-600">551 Franklin St, Havre De Grace, MD 21078</p>
-          <p className="mt-1 flex items-center gap-2 text-sm text-slate-600">
-            <Phone size={14} aria-hidden="true" />
-            <span>(410) 939-3611</span>
-          </p>
-          <p className="mt-1 flex items-center gap-2 text-sm text-slate-600">
-            <Mail size={14} aria-hidden="true" />
-            <a href="mailto:office@pchdg.org" className="hover:underline">office@pchdg.org</a>
-          </p>
-          <p className="mt-3">
-            <Link
-              href="https://www.google.com/maps/search/551+Franklin+St,+Havre+De+Grace,+MD+21078"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm font-semibold text-blue-700 hover:underline"
-            >
-              Get Directions →
-            </Link>
-          </p>
+          <ContactInfoBlock
+            className="mt-2"
+            address="551 Franklin St, Havre De Grace, MD 21078"
+            phone="(410) 939-3611"
+            email="office@pchdg.org"
+            directionsUrl="https://www.google.com/maps/search/551+Franklin+St,+Havre+De+Grace,+MD+21078"
+          />
         </div>
         <div className="rounded-xl border border-slate-200 bg-white p-5">
           <h2 className="text-lg font-semibold text-slate-900">Office Hours</h2>

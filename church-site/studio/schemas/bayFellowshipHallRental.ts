@@ -2,7 +2,7 @@ import { defineType } from 'sanity'
 
 export default defineType({
   name: 'bayFellowshipHallRental',
-  title: 'Bay Fellowship Hall Rental',
+  title: 'Bay Fellowship Hall Rental Content',
   type: 'document',
   fields: [
     {
@@ -10,6 +10,7 @@ export default defineType({
       title: 'Page Title',
       type: 'string',
       initialValue: 'Bay Fellowship Hall Rental',
+      description: 'Main heading shown at the top of the Hall Rental page.',
       validation: (Rule) => Rule.required(),
     },
     {
@@ -17,6 +18,7 @@ export default defineType({
       title: 'Intro Text',
       type: 'text',
       rows: 4,
+      description: 'Short introductory paragraph displayed below the page title.',
     },
     {
       name: 'highlights',
@@ -36,16 +38,19 @@ export default defineType({
       name: 'contactName',
       title: 'Contact Name',
       type: 'string',
+      description: 'Name shown in the Contact section.',
     },
     {
       name: 'contactEmail',
       title: 'Contact Email',
       type: 'email',
+      description: 'Email used in the Contact section.',
     },
     {
       name: 'contactPhone',
       title: 'Contact Phone',
       type: 'string',
+      description: 'Phone number shown in the Contact section.',
     },
     {
       name: 'ctaLabel',
@@ -57,6 +62,7 @@ export default defineType({
       name: 'ctaUrl',
       title: 'CTA URL',
       type: 'url',
+      description: 'Destination for the call-to-action button.',
     },
   ],
   preview: {

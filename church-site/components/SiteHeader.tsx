@@ -8,7 +8,7 @@ import { Menu, X } from 'lucide-react'
 const links = [
   { href: '/about', label: 'About' },
   { href: '/worship', label: 'Worship' },
-  { href: '/bay-fellowship-hall-rental', label: 'Bay Fellowship Hall Rental' },
+  { href: '/bay-fellowship-hall-rental', label: 'Hall Rental' },
   { href: '/missions-outreach', label: 'Missions and Outreach' },
   { href: '/sermons', label: 'Sermons' },
   { href: '/events', label: 'Events' },
