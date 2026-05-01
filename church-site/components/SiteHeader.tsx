@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
-import { Menu, X } from 'lucide-react'
+import { Facebook, Menu, X } from 'lucide-react'
 
 const links = [
   { href: '/about', label: 'About' },
@@ -16,6 +16,8 @@ const links = [
   { href: '/give', label: 'Give' },
   { href: '/contact', label: 'Contact' },
 ]
+
+const facebookUrl = 'https://www.facebook.com/presbyterianchurchhdg'
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false)
@@ -53,14 +55,26 @@ export default function SiteHeader() {
           ))}
         </nav>
 
-        <button
-          className="rounded p-2.5 hover:bg-slate-100 md:hidden"
-          onClick={() => setOpen(!open)}
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          aria-expanded={open}
-        >
-          {open ? <X size={20} /> : <Menu size={20} />}
-        </button>
+        <div className="flex items-center gap-2">
+          <a
+            href={facebookUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit our Facebook page"
+            className="rounded-md p-2 text-brand transition-colors hover:bg-blue-50"
+          >
+            <Facebook size={18} aria-hidden="true" />
+          </a>
+
+          <button
+            className="rounded p-2.5 hover:bg-slate-100 md:hidden"
+            onClick={() => setOpen(!open)}
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+          >
+            {open ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </div>
 
       {open && (
