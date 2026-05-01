@@ -17,10 +17,23 @@ export default defineType({
       type: 'string',
     },
     {
+      name: 'aboutSectionTitle',
+      title: 'About Section Title',
+      type: 'string',
+      initialValue: 'About Our Church',
+    },
+    {
       name: 'introText',
       title: 'Intro Text',
       type: 'text',
       rows: 4,
+    },
+    {
+      name: 'aboutSectionBody',
+      title: 'About Section Body',
+      type: 'array',
+      of: [{ type: 'block' }],
+      description: 'Rich text content for the About section on the homepage.',
     },
     {
       name: 'heroImage',

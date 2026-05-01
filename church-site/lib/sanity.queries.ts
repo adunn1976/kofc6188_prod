@@ -1,7 +1,9 @@
 export const homepageQuery = `*[_type == "homepage"][0] {
   heroTitle,
   heroSubtitle,
+  aboutSectionTitle,
   introText,
+  aboutSectionBody,
   heroImage,
   serviceTimes,
   primaryCtaLabel,

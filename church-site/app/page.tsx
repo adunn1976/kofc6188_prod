@@ -1,10 +1,63 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { client } from '@/lib/sanity.client'
+import RichText from '@/components/RichText'
 import { homepageQuery, latestAnnouncementsQuery, latestSermonsQuery, upcomingEventsQuery } from '@/lib/sanity.queries'
 import { urlFor } from '@/lib/sanity.image'
 
-function asText(value: any) {
+type PortableTextChild = {
+  text?: string
+}
+
+type PortableTextBlock = {
+  _type?: string
+  children?: PortableTextChild[]
+}
+
+type ServiceTime = {
+  day?: string
+  time?: string
+  label?: string
+}
+
+type HomepageData = {
+  heroTitle?: string | PortableTextBlock[]
+  heroSubtitle?: string | PortableTextBlock[]
+  aboutSectionTitle?: string | PortableTextBlock[]
+  introText?: string | PortableTextBlock[]
+  aboutSectionBody?: PortableTextBlock[]
+  heroImage?: {
+    alt?: string
+  }
+  serviceTimes?: ServiceTime[]
+  primaryCtaLabel?: string
+  primaryCtaUrl?: string
+}
+
+type Announcement = {
+  _id: string
+  title: string
+  date: string
+  summary?: string
+}
+
+type Sermon = {
+  _id: string
+  title: string
+  date: string
+  speaker?: string
+  mediaUrl?: string
+}
+
+type Event = {
+  _id: string
+  title: string
+  date: string
+  summary?: string
+  location?: string
+}
+
+function asText(value: string | PortableTextBlock[] | undefined) {
   if (!value) return ''
   if (typeof value === 'string') return value
   if (Array.isArray(value)) {
@@ -12,7 +65,7 @@ function asText(value: any) {
       .map((block) => {
         if (typeof block === 'string') return block
         if (block?._type === 'block' && Array.isArray(block.children)) {
-          return block.children.map((child: any) => child?.text || '').join('')
+          return block.children.map((child) => child?.text || '').join('')
         }
         return ''
       })
@@ -23,10 +76,10 @@ function asText(value: any) {
 }
 
 export default async function HomePage() {
-  let homepage: any = null
-  let announcements: any[] = []
-  let sermons: any[] = []
-  let events: any[] = []
+  let homepage: HomepageData | null = null
+  let announcements: Announcement[] = []
+  let sermons: Sermon[] = []
+  let events: Event[] = []
 
   try {
     homepage = await client.fetch(homepageQuery)
@@ -36,6 +89,12 @@ export default async function HomePage() {
   } catch (error) {
     console.error('Error fetching church homepage content:', error)
   }
+
+  const aboutSectionTitle = asText(homepage?.aboutSectionTitle) || 'About Our Church'
+  const hasManagedAboutBody = Array.isArray(homepage?.aboutSectionBody) && homepage.aboutSectionBody.length > 0
+  const aboutFallbackText =
+    asText(homepage?.introText) ||
+    'We are a welcoming church committed to worship, discipleship, and loving our community. Whether you are new to church or have followed Christ for years, we would love to walk with you.'
 
   return (
     <div>
@@ -73,11 +132,14 @@ export default async function HomePage() {
       <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
         <div className="grid gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl">About Our Church</h2>
-            <p className="mt-4 text-slate-700 leading-7">
-              {asText(homepage?.introText) ||
-                'We are a welcoming church committed to worship, discipleship, and loving our community. Whether you are new to church or have followed Christ for years, we would love to walk with you.'}
-            </p>
+            <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl">{aboutSectionTitle}</h2>
+            {hasManagedAboutBody ? (
+              <div className="mt-4 text-slate-700">
+                <RichText value={homepage.aboutSectionBody} />
+              </div>
+            ) : (
+              <p className="mt-4 leading-7 text-slate-700">{aboutFallbackText}</p>
+            )}
             <div className="mt-6 flex flex-wrap gap-3">
               <Link href="/about" className="rounded bg-blue-700 px-4 py-2 text-white hover:bg-blue-800">Learn More</Link>
               <Link href="/contact" className="rounded border border-slate-300 bg-white px-4 py-2 text-slate-700 hover:bg-slate-100">Contact Us</Link>
@@ -87,7 +149,7 @@ export default async function HomePage() {
             <h3 className="text-lg font-semibold text-slate-900">Service Times</h3>
             <ul className="mt-3 space-y-2 text-sm text-slate-700">
               {homepage?.serviceTimes?.length > 0 ? (
-                homepage.serviceTimes.map((item: any, idx: number) => (
+                homepage.serviceTimes.map((item: ServiceTime, idx: number) => (
                   <li key={idx}>
                     <span className="font-medium">{item.day || 'Sunday'}:</span> {item.time || '9:00 AM'}
                     {item.label ? ` (${item.label})` : ''}
