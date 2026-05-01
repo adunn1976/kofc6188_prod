@@ -2,6 +2,10 @@ export const homepageQuery = `*[_type == "homepage"][0] {
   heroTitle,
   heroSubtitle,
   introText,
+  aboutSection {
+    title,
+    text
+  },
   heroImage,
   serviceTimes,
   primaryCtaLabel,
@@ -9,8 +13,6 @@ export const homepageQuery = `*[_type == "homepage"][0] {
 }`
 
 export const aboutPageQuery = `*[_type == "about"][0] {
-  homepageSectionTitle,
-  homepageSectionText,
   mission,
   vision,
   values

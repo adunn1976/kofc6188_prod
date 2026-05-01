@@ -21,6 +21,26 @@ export default defineType({
       title: 'Intro Text',
       type: 'text',
       rows: 4,
+      description: 'Legacy fallback text. Prefer editing About Our Church section below.',
+    },
+    {
+      name: 'aboutSection',
+      title: 'About Our Church Section',
+      type: 'object',
+      fields: [
+        {
+          name: 'title',
+          title: 'Section Title',
+          type: 'string',
+          initialValue: 'About Our Church',
+        },
+        {
+          name: 'text',
+          title: 'Section Text',
+          type: 'text',
+          rows: 4,
+        },
+      ],
     },
     {
       name: 'heroImage',

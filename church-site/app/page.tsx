@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { client } from '@/lib/sanity.client'
-import { aboutPageQuery, homepageQuery, latestAnnouncementsQuery, latestSermonsQuery, upcomingEventsQuery } from '@/lib/sanity.queries'
+import { homepageQuery, latestAnnouncementsQuery, latestSermonsQuery, upcomingEventsQuery } from '@/lib/sanity.queries'
 import { urlFor } from '@/lib/sanity.image'
 
 type PortableTextChild = {
@@ -23,6 +23,10 @@ type HomepageData = {
   heroTitle?: string | PortableTextBlock[]
   heroSubtitle?: string | PortableTextBlock[]
   introText?: string | PortableTextBlock[]
+  aboutSection?: {
+    title?: string
+    text?: string
+  }
   heroImage?: {
     alt?: string
   }
@@ -54,11 +58,6 @@ type Event = {
   location?: string
 }
 
-type AboutPageContent = {
-  homepageSectionTitle?: string
-  homepageSectionText?: string
-}
-
 function asText(value: string | PortableTextBlock[] | undefined) {
   if (!value) return ''
   if (typeof value === 'string') return value
@@ -79,22 +78,19 @@ function asText(value: string | PortableTextBlock[] | undefined) {
 
 export default async function HomePage() {
   let homepage: HomepageData | null = null
-  let aboutContent: AboutPageContent = {}
   let announcements: Announcement[] = []
   let sermons: Sermon[] = []
   let events: Event[] = []
 
   try {
-    const [homepageData, aboutData, announcementsData, sermonsData, eventsData] = await Promise.all([
+    const [homepageData, announcementsData, sermonsData, eventsData] = await Promise.all([
       client.fetch(homepageQuery),
-      client.fetch(aboutPageQuery),
       client.fetch(latestAnnouncementsQuery),
       client.fetch(latestSermonsQuery),
       client.fetch(upcomingEventsQuery),
     ])
 
     homepage = homepageData
-    aboutContent = aboutData || {}
     announcements = announcementsData || []
     sermons = sermonsData || []
     events = eventsData || []
@@ -102,11 +98,11 @@ export default async function HomePage() {
     console.error('Error fetching church homepage content:', error)
   }
 
-  const aboutSectionTitle = aboutContent.homepageSectionTitle || 'About Our Church'
+  const aboutSectionTitle = homepage?.aboutSection?.title || 'About Our Church'
   const aboutFallbackText =
     asText(homepage?.introText) ||
     'We are a welcoming church committed to worship, discipleship, and loving our community. Whether you are new to church or have followed Christ for years, we would love to walk with you.'
-  const aboutSectionText = aboutContent.homepageSectionText || aboutFallbackText
+  const aboutSectionText = homepage?.aboutSection?.text || aboutFallbackText
 
   return (
     <div>

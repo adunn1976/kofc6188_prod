@@ -6,19 +6,6 @@ export default defineType({
   type: 'document',
   fields: [
     {
-      name: 'homepageSectionTitle',
-      title: 'Homepage About Section Title',
-      type: 'string',
-      initialValue: 'About Our Church',
-    },
-    {
-      name: 'homepageSectionText',
-      title: 'Homepage About Section Text',
-      type: 'text',
-      rows: 4,
-      description: 'Short About section content displayed on the homepage.',
-    },
-    {
       name: 'mission',
       title: 'Mission',
       type: 'text',
