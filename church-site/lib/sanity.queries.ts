@@ -18,6 +18,18 @@ export const aboutPageQuery = `*[_type == "about"][0] {
   values
 }`
 
+export const bayFellowshipHallRentalQuery = `*[_type == "bayFellowshipHallRental"][0] {
+  pageTitle,
+  introText,
+  highlights,
+  details,
+  contactName,
+  contactEmail,
+  contactPhone,
+  ctaLabel,
+  ctaUrl
+}`
+
 export const latestAnnouncementsQuery = `*[_type == "announcement"] | order(date desc)[0...3] {
   _id,
   title,
