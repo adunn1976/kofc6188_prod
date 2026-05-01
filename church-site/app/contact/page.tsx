@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export default function ContactPage() {
   return (
     <section className="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-12">
@@ -6,10 +8,19 @@ export default function ContactPage() {
 
       <div className="mt-8 grid gap-6 md:grid-cols-2">
         <div className="rounded-xl border border-slate-200 bg-white p-5">
-          <h2 className="text-lg font-semibold text-slate-900">Church Office</h2>
-          <p className="mt-2 text-sm text-slate-600">123 Church Street, Bel Air, MD</p>
-          <p className="mt-1 text-sm text-slate-600">(410) 555-1234</p>
-          <p className="mt-1 text-sm text-slate-600">hello@churchsite.org</p>
+          <h2 className="text-lg font-semibold text-slate-900">The Presbyterian Church of Havre de Grace</h2>
+          <p className="mt-2 text-sm text-slate-600">551 Franklin St, Havre De Grace, MD 21078</p>
+          <p className="mt-1 text-sm text-slate-600">(410) 939-3611</p>
+          <p className="mt-3">
+            <Link
+              href="https://www.google.com/maps/search/551+Franklin+St,+Havre+De+Grace,+MD+21078"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-semibold text-blue-700 hover:underline"
+            >
+              Get Directions →
+            </Link>
+          </p>
         </div>
         <div className="rounded-xl border border-slate-200 bg-white p-5">
           <h2 className="text-lg font-semibold text-slate-900">Office Hours</h2>
