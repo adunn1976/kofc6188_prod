@@ -8,7 +8,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
 
   const programLinks = ["Faith", "Family", "Community", "Life"]
-  const joinUrl = "https://www2.kofc.org/au/applicationportal/AuthorizeUser.action?hasAgentReferralCode=true&HasAgentReferralCode=true&agentReferralCode=RHICKEY&AgentReferralCode=RHICKEY&referralCode=RHICKEY&ReferralCode=RHICKEY&preferredLocalCouncil=6188&PreferredLocalCouncil=6188&council=6188&Council=6188&councilNumber=6188&CouncilNumber=6188"
+  const joinUrl = "https://www.kofc.org/get-involved/join-kofc/?hasAgentReferralCode=true&HasAgentReferralCode=true&agentReferralCode=RHICKEY&AgentReferralCode=RHICKEY&referralCode=RHICKEY&ReferralCode=RHICKEY&preferredLocalCouncil=6188&PreferredLocalCouncil=6188&council=6188&Council=6188&councilNumber=6188&CouncilNumber=6188"
 
   function closeMenus() {
     setProgramsOpen(false)
