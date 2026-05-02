@@ -38,10 +38,6 @@ export default function SiteHeader() {
     <header className="sticky top-0 z-50 shadow-sm">
       <div className="bg-brand text-white">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-          <Link href="/" className="min-w-0 text-base font-semibold leading-tight text-white sm:text-xl">
-            The Presbyterian Church of Havre de Grace
-          </Link>
-
           <a
             href={facebookUrl}
             target="_blank"
@@ -51,6 +47,12 @@ export default function SiteHeader() {
           >
             <FacebookIcon />
           </a>
+
+          <Link href="/" className="min-w-0 text-base font-semibold leading-tight text-white sm:text-xl">
+            The Presbyterian Church of Havre de Grace
+          </Link>
+
+          <div className="w-9 shrink-0" aria-hidden="true" />
         </div>
       </div>
 
