@@ -8,7 +8,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
 
   const programLinks = ["Faith", "Family", "Community", "Life"]
-  const joinUrl = "https://www.kofc.org/get-involved/join-kofc/?hasAgentReferralCode=true&HasAgentReferralCode=true&agentReferralCode=RHICKEY&AgentReferralCode=RHICKEY&referralCode=RHICKEY&ReferralCode=RHICKEY&preferredLocalCouncil=6188&PreferredLocalCouncil=6188&council=6188&Council=6188&councilNumber=6188&CouncilNumber=6188"
+  const joinUrl = "/join"
 
   function closeMenus() {
     setProgramsOpen(false)
@@ -51,14 +51,12 @@ export default function Navbar() {
           <Link href="/events" className="transition hover:text-yellow-300">Events</Link>
           <Link href="/officers" className="transition hover:text-yellow-300">Officers</Link>
           <Link href="/contact" className="transition hover:text-yellow-300">Contact</Link>
-          <a
+          <Link
             href={joinUrl}
-            target="_blank"
-            rel="noopener noreferrer"
             className="rounded-md bg-yellow-400 px-3 py-2 text-sm font-semibold text-blue-900 transition hover:bg-yellow-300"
           >
             Join Now
-          </a>
+          </Link>
         </div>
 
         <button
@@ -103,15 +101,13 @@ export default function Navbar() {
             <Link href="/events" className="rounded px-3 py-2 hover:bg-blue-800" onClick={closeMenus}>Events</Link>
             <Link href="/officers" className="rounded px-3 py-2 hover:bg-blue-800" onClick={closeMenus}>Officers</Link>
             <Link href="/contact" className="rounded px-3 py-2 hover:bg-blue-800" onClick={closeMenus}>Contact</Link>
-            <a
+            <Link
               href={joinUrl}
-              target="_blank"
-              rel="noopener noreferrer"
               className="mt-2 rounded bg-yellow-400 px-3 py-2 text-center font-semibold text-blue-900 transition hover:bg-yellow-300"
               onClick={closeMenus}
             >
               Join Now
-            </a>
+            </Link>
           </div>
         </div>
       )}
