@@ -30,6 +30,14 @@ export default defineType({
       title: 'Description',
       type: 'text',
       rows: 3,
+      description: 'Optional supporting text shown below the intro on the program page.',
+    },
+    {
+      name: 'introText',
+      title: 'Intro Text',
+      type: 'text',
+      rows: 4,
+      description: 'This text appears near the top of the program page under the title.',
     },
     {
       name: 'summary',

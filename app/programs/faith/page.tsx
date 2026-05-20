@@ -33,7 +33,9 @@ export default async function FaithPage() {
       </h1>
 
       <div className="prose prose-lg max-w-none">
-        {program?.content ? (
+        {program?.introText ? (
+          <p className="text-lg text-gray-700 mb-6">{program.introText}</p>
+        ) : program?.content ? (
           <div dangerouslySetInnerHTML={{ __html: program.content }} />
         ) : (
           <p className="text-lg text-gray-700 mb-6">
