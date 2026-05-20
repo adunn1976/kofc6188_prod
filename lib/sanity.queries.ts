@@ -59,7 +59,6 @@ export const latestProgramEventsQuery = `*[_type == "event" && references($progr
 
 // Query for homepage content
 export const homepageQuery = `*[_type == "homepage"][0] {
-  _id,
   heroTitle,
   heroSubtitle,
   heroText,
