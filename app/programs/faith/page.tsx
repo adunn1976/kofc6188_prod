@@ -1,5 +1,5 @@
 import { client } from '@/lib/sanity.client'
-import { singleProgramQuery, latestProgramEventsQuery } from '@/lib/sanity.queries'
+import { singleProgramQuery } from '@/lib/sanity.queries'
 import { urlFor } from '@/lib/sanity.image'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -7,13 +7,9 @@ import ProgramPosts from '@/components/ProgramPosts'
 
 export default async function FaithPage() {
   let program = null
-  let events = []
 
   try {
     program = await client.fetch(singleProgramQuery, { slug: 'faith' })
-    if (program?._id) {
-      events = await client.fetch(latestProgramEventsQuery, { programId: program._id })
-    }
   } catch (error) {
     console.error('Error fetching faith program:', error)
   }
@@ -58,9 +54,9 @@ export default async function FaithPage() {
 
       <section className="mt-12 border-t pt-8">
         <h2 className="mb-6 text-2xl font-semibold">Latest Faith Events</h2>
-        {events.length > 0 ? (
+        {program?.events && program.events.length > 0 ? (
           <div className="space-y-4">
-            {events.slice(0, 3).map((event: any) => (
+            {program.events.map((event: any) => (
               <div key={event._id} className="bg-gray-50 rounded-lg p-6">
                 <h3 className="text-xl font-semibold mb-2">{event.title}</h3>
                 <div className="text-sm text-gray-600 mb-3">

@@ -26,6 +26,13 @@ export const singleProgramQuery = `*[_type == "program" && slug.current == $slug
     image,
     date,
     body
+  },
+  "events": *[_type == "event" && program._ref == ^._id] | order(date desc) {
+    _id,
+    title,
+    date,
+    description,
+    location
   }
 }`
 
