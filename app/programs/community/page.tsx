@@ -4,6 +4,7 @@ import { urlFor } from '@/lib/sanity.image'
 import Image from 'next/image'
 import Link from 'next/link'
 import ProgramPosts from '@/components/ProgramPosts'
+import ProgramRichContent from '@/components/ProgramRichContent'
 
 export default async function CommunityPage() {
   let program = null
@@ -35,8 +36,6 @@ export default async function CommunityPage() {
       <div className="prose prose-lg max-w-none">
         {program?.introText ? (
           <p className="text-lg text-gray-700 mb-6">{program.introText}</p>
-        ) : program?.content ? (
-          <div dangerouslySetInnerHTML={{ __html: program.content }} />
         ) : (
           <p className="text-lg text-gray-700 mb-6">
             Our Community program serves the local Corpus Christi community through various
@@ -51,6 +50,16 @@ export default async function CommunityPage() {
           <p className="text-purple-700">{program.description}</p>
         </div>
       )}
+
+      <ProgramRichContent
+        blocks={program?.content}
+        title="Program Content"
+      />
+
+      <ProgramRichContent
+        blocks={program?.body}
+        title="Additional Details"
+      />
 
       <ProgramPosts posts={program?.posts} />
 

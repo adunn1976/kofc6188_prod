@@ -41,17 +41,6 @@ export default defineType({
       description: 'This text appears near the top of the program page under the title.',
     },
     {
-      name: 'summary',
-      title: 'Summary',
-      type: 'text',
-      rows: 3,
-    },
-    {
-      name: 'text',
-      title: 'Text',
-      type: 'text',
-    },
-    {
       name: 'content',
       title: 'Content',
       type: 'array',
@@ -59,6 +48,7 @@ export default defineType({
         { type: 'block' },
         { type: 'image' }
       ],
+      description: 'Main program content section displayed on the program page under Description.',
     },
     {
       name: 'body',
@@ -68,6 +58,7 @@ export default defineType({
         { type: 'block' },
         { type: 'image' }
       ],
+      description: 'Additional details section displayed on the program page below Content.',
     },
     {
       name: 'image',

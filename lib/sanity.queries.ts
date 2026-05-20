@@ -8,6 +8,7 @@ export const allProgramsQuery = `*[_type == "program"] | order(order asc) {
   description,
   introText,
   content,
+  body,
   image
 }`
 
@@ -19,6 +20,7 @@ export const singleProgramQuery = `*[_type == "program" && slug.current == $slug
   description,
   introText,
   content,
+  body,
   image,
   "posts": *[_type == "programPost" && references(^._id)] | order(date desc) {
     _id,
