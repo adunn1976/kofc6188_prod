@@ -31,6 +31,7 @@ export default defineType({
       type: 'text',
       rows: 3,
       description: 'Optional supporting text shown below the intro on the program page.',
+      placeholder: 'Example: This program helps support families in our parish and community.',
     },
     {
       name: 'introText',
