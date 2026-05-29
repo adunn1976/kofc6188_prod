@@ -64,7 +64,9 @@ export const homepageQuery = `*[_type == "homepage"][0] {
   heroText,
   heroImage,
   missionTitle,
-  missionText
+  missionText,
+  visionTitle,
+  visionText
 }`
 
 // Query for council officers
