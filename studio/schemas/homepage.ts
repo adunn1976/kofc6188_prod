@@ -52,6 +52,21 @@ export default defineType({
       description: 'This is the homepage paragraph under Mission Title (currently starts with “The Knights of Columbus is a Catholic fraternal organization…”).',
       placeholder: 'Example: The Knights of Columbus is a Catholic fraternal organization dedicated to serving our community through faith, family, and charitable works.',
     },
+    {
+      name: 'visionTitle',
+      title: 'Vision Title',
+      type: 'string',
+      description: 'Heading for the vision section that follows the mission content.',
+      initialValue: 'Our Vision',
+    },
+    {
+      name: 'visionText',
+      title: 'Vision Text',
+      type: 'text',
+      rows: 4,
+      description: 'Text content for the vision section that appears after the mission section.',
+      placeholder: 'Example: We envision a vibrant Catholic community strengthened through service, fellowship, and faith-filled leadership.',
+    },
   ],
   preview: {
     prepare() {
