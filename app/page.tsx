@@ -55,6 +55,18 @@ export default async function HomePage() {
         </p>
       </section>
 
+      {/* Vision Section */}
+      <section className="mx-auto max-w-4xl px-4 py-12 text-center sm:px-6 sm:py-16">
+        <h2 className="mb-4 text-2xl font-bold sm:mb-6 sm:text-3xl">
+          {homepageData?.visionTitle || "Our Vision"}
+        </h2>
+        <p className="text-base leading-7 text-gray-700 sm:text-lg">
+          {homepageData?.visionText ||
+            "We envision a vibrant Catholic community strengthened through service, fellowship, and faith-filled leadership."
+          }
+        </p>
+      </section>
+
       {/* Featured Programs */}
       <section className="mx-auto w-full max-w-6xl px-4 pb-4 sm:px-6">
         <h2 className="mb-6 text-center text-2xl font-bold sm:text-3xl">Our Programs</h2>
