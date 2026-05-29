@@ -1,3 +1,4 @@
+export const revalidate = 60; // Rechecks Sanity for new content every 60 seconds
 import Link from "next/link"
 import Image from "next/image"
 import { client } from "@/lib/sanity.client"
