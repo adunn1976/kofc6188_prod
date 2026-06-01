@@ -1,12 +1,20 @@
+import React from 'react'
 import Image from 'next/image'
 import { urlFor } from '@/lib/sanity.image'
+
+type ProgramChild = {
+  _key?: string
+  _type?: string
+  text?: string
+  marks?: string[]
+}
 
 type ProgramBlock = {
   _type?: string
   _key?: string
   asset?: unknown
   alt?: string
-  children?: Array<{ text?: string }>
+  children?: ProgramChild[]
 }
 
 type ProgramRichContentProps = {
@@ -34,15 +42,27 @@ function renderBlock(block: ProgramBlock, index: number) {
   }
 
   if (block._type === 'block' && Array.isArray(block.children)) {
-    const text = block.children.map((child) => child.text || '').join('')
+    const plainText = block.children.map((child) => child.text || '').join('')
 
-    if (!text.trim()) {
+    if (!plainText.trim()) {
       return null
     }
 
     return (
       <p key={block._key || index} className="mb-4 text-gray-700">
-        {text}
+        {block.children.map((child, i) => {
+          const text = child.text || ''
+          const isBold = child.marks?.includes('strong')
+          const isItalic = child.marks?.includes('em')
+
+          let node: React.ReactNode = text
+          if (isBold && isItalic) node = <strong key={i}><em>{text}</em></strong>
+          else if (isBold) node = <strong key={i}>{text}</strong>
+          else if (isItalic) node = <em key={i}>{text}</em>
+          else node = <span key={i}>{text}</span>
+
+          return node
+        })}
       </p>
     )
   }
