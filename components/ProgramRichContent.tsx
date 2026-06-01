@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { urlFor } from '@/lib/sanity.image'
 
 type ProgramChild = {
@@ -55,11 +56,40 @@ function renderBlock(block: ProgramBlock, index: number) {
       const isBold = child.marks?.includes('strong')
       const isItalic = child.marks?.includes('em')
 
+      // Find a link mark key if present
+      const linkMarkKey = child.marks?.find((m) =>
+        block.markDefs?.some((def) => def._key === m && def._type === 'link')
+      )
+      const linkDef = linkMarkKey
+        ? block.markDefs?.find((def) => def._key === linkMarkKey)
+        : undefined
+
       let node: React.ReactNode = text
-      if (isBold && isItalic) node = <strong key={i}><em>{text}</em></strong>
-      else if (isBold) node = <strong key={i}>{text}</strong>
-      else if (isItalic) node = <em key={i}>{text}</em>
-      else node = <span key={i}>{text}</span>
+      if (isBold && isItalic) node = <strong><em>{text}</em></strong>
+      else if (isBold) node = <strong>{text}</strong>
+      else if (isItalic) node = <em>{text}</em>
+      else node = <span>{text}</span>
+
+      if (linkDef?.href) {
+        const isExternal = linkDef.href.startsWith('http')
+        node = isExternal ? (
+          <a
+            key={i}
+            href={linkDef.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 underline hover:text-blue-800"
+          >
+            {node}
+          </a>
+        ) : (
+          <Link key={i} href={linkDef.href} className="text-blue-600 underline hover:text-blue-800">
+            {node}
+          </Link>
+        )
+      } else {
+        node = <span key={i}>{node}</span>
+      }
 
       return node
     })
