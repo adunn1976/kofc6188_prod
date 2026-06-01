@@ -1,6 +1,6 @@
 import { client } from '@/lib/sanity.client'
 import { latestEventsQuery } from '@/lib/sanity.queries'
-import FormattedText from '@/components/FormattedText'
+import FormattedText, { FormattedInlineText } from '@/components/FormattedText'
 
 export default async function EventsPage() {
   let events = []
@@ -21,10 +21,13 @@ export default async function EventsPage() {
           {events.map((event: any) => (
             <div key={event._id} className="rounded-lg border bg-white p-5 shadow sm:p-6">
               <h2 className="text-xl font-semibold mb-2">{event.title}</h2>
-              <p className="text-gray-600 mb-2">
-                {new Date(event.date).toLocaleDateString()}
-                {event.location && ` • ${event.location}`}
-              </p>
+              <p className="text-gray-600 mb-1">{new Date(event.date).toLocaleDateString()}</p>
+              {event.location && (
+                <p className="text-gray-600 mb-2">
+                  <strong>Location:</strong>{' '}
+                  <FormattedInlineText text={event.location} />
+                </p>
+              )}
               <FormattedText text={event.description} className="text-gray-700" />
             </div>
           ))}

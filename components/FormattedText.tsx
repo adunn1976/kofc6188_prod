@@ -5,6 +5,11 @@ type FormattedTextProps = {
   className?: string
 }
 
+type FormattedInlineTextProps = {
+  text?: string | null
+  className?: string
+}
+
 const urlRegex = /(https?:\/\/[^\s]+)/g
 
 function renderLinkedText(text: string): ReactNode[] {
@@ -33,4 +38,12 @@ export default function FormattedText({ text, className = '' }: FormattedTextPro
   }
 
   return <p className={`${className} whitespace-pre-line break-words`}>{renderLinkedText(text)}</p>
+}
+
+export function FormattedInlineText({ text, className = '' }: FormattedInlineTextProps) {
+  if (!text) {
+    return null
+  }
+
+  return <span className={`${className} break-words`}>{renderLinkedText(text)}</span>
 }
