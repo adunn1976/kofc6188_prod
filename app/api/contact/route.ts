@@ -1,17 +1,7 @@
 import { NextResponse } from 'next/server'
-import nodemailer from 'nodemailer'
+import { Resend } from 'resend'
 import { client } from '@/lib/sanity.client'
 import { siteSettingsQuery } from '@/lib/sanity.queries'
-
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT || 587),
-  secure: process.env.SMTP_SECURE === 'true',
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASSWORD,
-  },
-})
 
 export async function POST(request: Request) {
   try {
@@ -30,13 +20,16 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Contact email not configured' }, { status: 500 })
     }
 
-    if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
-      console.error('SMTP environment variables are not configured')
+    if (!process.env.RESEND_API_KEY) {
+      console.error('RESEND_API_KEY environment variable is not configured')
       return NextResponse.json({ error: 'Email server is not configured' }, { status: 500 })
     }
 
-    await transporter.sendMail({
-      from: `Website Contact <${process.env.SMTP_USER}>`,
+    const resend = new Resend(process.env.RESEND_API_KEY)
+    const fromEmail = process.env.CONTACT_FROM_EMAIL || 'onboarding@resend.dev'
+
+    const { error } = await resend.emails.send({
+      from: fromEmail,
       to: toEmail,
       replyTo: email,
       subject: `New contact form message from ${name}`,
@@ -48,6 +41,11 @@ export async function POST(request: Request) {
         <p>${message.replace(/\n/g, '<br />')}</p>
       `,
     })
+
+    if (error) {
+      console.error('Resend error:', error)
+      return NextResponse.json({ error: 'Failed to send message' }, { status: 500 })
+    }
 
     return NextResponse.json({ success: true })
   } catch (error) {
