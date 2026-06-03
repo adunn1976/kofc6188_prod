@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import ProgramPosts from '@/components/ProgramPosts'
 import ProgramRichContent from '@/components/ProgramRichContent'
+import FormattedText, { FormattedInlineText } from '@/components/FormattedText'
 
 export default async function LifePage() {
   let program = null
@@ -72,9 +73,14 @@ export default async function LifePage() {
                 <h3 className="text-xl font-semibold mb-2">{event.title}</h3>
                 <div className="text-sm text-gray-600 mb-3">
                   <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
-                  {event.location && <p><strong>Location:</strong> {event.location}</p>}
+                  {event.location && (
+                    <p>
+                      <strong>Location:</strong>{' '}
+                      <FormattedInlineText text={event.location} />
+                    </p>
+                  )}
                 </div>
-                <p className="text-gray-700">{event.description}</p>
+                <FormattedText text={event.description} className="text-gray-700" />
               </div>
             ))}
           </div>
