@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
 
-const TO_EMAIL = 'm.mesngon@gmail.com'
+const TO_EMAIL = 'corpuschristicouncil6188@gmail.com'
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
