@@ -12,9 +12,13 @@ export default function ContactPage() {
       body: JSON.stringify(data),
       headers: { 'Content-Type': 'application/json' }
     })
-    if (res.ok) setStatus('Message sent — thank you!')
-    else setStatus('Error sending message')
-    e.target.reset()
+    const result = await res.json()
+    if (res.ok) {
+      setStatus('Message sent — thank you!')
+      e.target.reset()
+    } else {
+      setStatus(result?.error ? `Error: ${result.error}` : 'Error sending message')
+    }
   }
 
   return (

@@ -37,7 +37,14 @@ Copy `.env.example` to `.env.local` and set at minimum:
 ```bash
 NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
 NEXT_PUBLIC_SANITY_DATASET=production
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=your_smtp_username
+SMTP_PASSWORD=your_smtp_password
 ```
+
+The contact form requires a working SMTP configuration to send messages to `corpuschristicouncil6188@gmail.com`.
 
 The Studio also reads these values when running locally.
 
