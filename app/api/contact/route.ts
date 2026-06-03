@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
-
-const TO_EMAIL = 'corpuschristicouncil6188@gmail.com'
+import { client } from '@/lib/sanity.client'
+import { siteSettingsQuery } from '@/lib/sanity.queries'
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -21,6 +21,15 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing name, email, or message' }, { status: 400 })
     }
 
+    // Fetch destination email from Sanity
+    const settings = await client.fetch(siteSettingsQuery)
+    const toEmail = settings?.contactEmail
+
+    if (!toEmail) {
+      console.error('No contactEmail configured in Sanity Site Settings')
+      return NextResponse.json({ error: 'Contact email not configured' }, { status: 500 })
+    }
+
     if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
       console.error('SMTP environment variables are not configured')
       return NextResponse.json({ error: 'Email server is not configured' }, { status: 500 })
@@ -28,14 +37,15 @@ export async function POST(request: Request) {
 
     await transporter.sendMail({
       from: `Website Contact <${process.env.SMTP_USER}>`,
-      to: TO_EMAIL,
+      to: toEmail,
       replyTo: email,
       subject: `New contact form message from ${name}`,
-      text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
+      text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
       html: `
         <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p>${message.replace(/\n/g, '<br/>')}</p>
+        <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+        <p><strong>Message:</strong></p>
+        <p>${message.replace(/\n/g, '<br />')}</p>
       `,
     })
 

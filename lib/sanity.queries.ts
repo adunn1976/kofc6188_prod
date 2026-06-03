@@ -49,12 +49,9 @@ export const latestEventsQuery = `*[_type == "event"] | order(date desc)[0...5] 
   location
 }`
 
-export const latestProgramEventsQuery = `*[_type == "event" && references($programId) && date >= now()] | order(date asc)[0...5] {
-  _id,
-  title,
-  date,
-  description,
-  location
+// Query for site settings (contact email, etc.)
+export const siteSettingsQuery = `*[_type == "siteSettings"][0] {
+  contactEmail
 }`
 
 // Query for homepage content
