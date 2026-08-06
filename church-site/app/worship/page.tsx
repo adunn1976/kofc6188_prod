@@ -38,7 +38,7 @@ export default async function WorshipPage() {
         </ul>
       </div>
 
-      <h2 className="mt-10 text-2xl font-bold text-slate-900">Recent Sermons</h2>
+      <h2 className="mt-10 text-2xl font-bold text-slate-900">From the Pastor's Pulpit</h2>
       <div className="mt-4 space-y-3">
         {(sermons.length > 0 ? sermons.slice(0, 5) : []).map((sermon) => (
           <article key={sermon._id} className="rounded-lg border border-slate-200 bg-white p-4">
