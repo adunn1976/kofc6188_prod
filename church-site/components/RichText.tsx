@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { PortableText } from '@portabletext/react'
 import { urlFor } from '@/lib/sanity.image'
 
@@ -15,12 +14,11 @@ export default function RichText({ value }: { value?: any[] }) {
           types: {
             image: ({ value }: any) => (
               <div className="my-6 overflow-hidden rounded-xl">
-                <Image
-                  src={urlFor(value).width(1200).height(700).url()}
+                <img
+                  src={urlFor(value).fit('max').auto('format').url()}
                   alt={value?.alt || 'Content image'}
-                  width={1200}
-                  height={700}
-                  className="h-auto w-full object-cover"
+                  loading="lazy"
+                  className="h-auto w-full rounded-xl object-contain"
                 />
               </div>
             ),
