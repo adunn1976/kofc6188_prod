@@ -115,22 +115,22 @@ export default async function EventsPage() {
                   {dayEvents.slice(0, 2).map((event) => (
                     <p key={event._id} className="truncate text-[11px] text-blue-700">
                       {event.slug?.current ? (
-                        <Link href={`/events/${event.slug.current}`} className="hover:underline">
+                        <Link href={`/events/${event.slug.current}`} className="hover:underline" title={event.title}>
                           {event.title}
                         </Link>
                       ) : (
-                        event.title
+                        <span title={event.title}>{event.title}</span>
                       )}
                     </p>
                   ))}
                   {recurringDayEvents.slice(0, 1).map((event) => (
                     <p key={`recurring-${event._id}`} className="truncate text-[11px] text-emerald-700">
                       {event.slug?.current ? (
-                        <Link href={`/events/${event.slug.current}`} className="hover:underline">
+                        <Link href={`/events/${event.slug.current}`} className="hover:underline" title={event.title}>
                           ↺ {event.title}
                         </Link>
                       ) : (
-                        <>↺ {event.title}</>
+                        <span title={event.title}>↺ {event.title}</span>
                       )}
                     </p>
                   ))}
