@@ -2,6 +2,24 @@ import { client } from '@/lib/sanity.client'
 import { allEventsQuery } from '@/lib/sanity.queries'
 import Link from 'next/link'
 
+const weekdayNameToIndex: Record<string, number> = {
+  sunday: 0,
+  monday: 1,
+  tuesday: 2,
+  wednesday: 3,
+  thursday: 4,
+  friday: 5,
+  saturday: 6,
+}
+
+function extractWeekdaysFromSchedule(schedule?: string) {
+  if (!schedule) return [] as number[]
+  const text = schedule.toLowerCase()
+  return Object.entries(weekdayNameToIndex)
+    .filter(([name]) => text.includes(name))
+    .map(([, index]) => index)
+}
+
 type EventListItem = {
   _id: string
   title: string
@@ -48,6 +66,19 @@ export default async function EventsPage() {
     eventsByDay.set(day, existing)
   }
 
+  const recurringEventsByDay = new Map<number, EventListItem[]>()
+  for (const event of recurringEvents) {
+    const weekdays = extractWeekdaysFromSchedule(event.schedule)
+    for (let day = 1; day <= daysInMonth; day += 1) {
+      const weekday = new Date(now.getFullYear(), now.getMonth(), day).getDay()
+      if (weekdays.includes(weekday)) {
+        const existing = recurringEventsByDay.get(day) || []
+        existing.push(event)
+        recurringEventsByDay.set(day, existing)
+      }
+    }
+  }
+
   const dayCells: Array<number | null> = [
     ...Array.from({ length: firstWeekday }, () => null),
     ...Array.from({ length: daysInMonth }, (_, idx) => idx + 1),
@@ -75,6 +106,7 @@ export default async function EventsPage() {
             }
 
             const dayEvents = eventsByDay.get(day) || []
+            const recurringDayEvents = recurringEventsByDay.get(day) || []
 
             return (
               <div key={day} className="min-h-[96px] rounded-lg border border-slate-200 bg-white p-2">
@@ -91,7 +123,20 @@ export default async function EventsPage() {
                       )}
                     </p>
                   ))}
-                  {dayEvents.length > 2 ? <p className="text-[11px] text-slate-500">+{dayEvents.length - 2} more</p> : null}
+                  {recurringDayEvents.slice(0, 1).map((event) => (
+                    <p key={`recurring-${event._id}`} className="truncate text-[11px] text-emerald-700">
+                      {event.slug?.current ? (
+                        <Link href={`/events/${event.slug.current}`} className="hover:underline">
+                          ↺ {event.title}
+                        </Link>
+                      ) : (
+                        <>↺ {event.title}</>
+                      )}
+                    </p>
+                  ))}
+                  {dayEvents.length + recurringDayEvents.length > 3 ? (
+                    <p className="text-[11px] text-slate-500">+{dayEvents.length + recurringDayEvents.length - 3} more</p>
+                  ) : null}
                 </div>
               </div>
             )
