@@ -38,6 +38,11 @@ export const worshipPageQuery = `*[_type == "worship"][0] {
   pulpitContent
 }`
 
+export const contactPageQuery = `*[_type == "contact"][0] {
+  officeHoursTitle,
+  officeHours
+}`
+
 export const latestAnnouncementsQuery = `*[_type == "announcement"] | order(date desc)[0...3] {
   _id,
   title,

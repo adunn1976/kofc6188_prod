@@ -1,6 +1,24 @@
+import { client } from '@/lib/sanity.client'
 import ContactInfoBlock from '@/components/ContactInfoBlock'
+import { contactPageQuery } from '@/lib/sanity.queries'
 
-export default function ContactPage() {
+type ContactPageContent = {
+  officeHoursTitle?: string
+  officeHours?: string
+}
+
+export default async function ContactPage() {
+  let content: ContactPageContent | null = null
+
+  try {
+    content = await client.fetch(contactPageQuery)
+  } catch (error) {
+    console.error('Error fetching contact page content:', error)
+  }
+
+  const officeHoursTitle = content?.officeHoursTitle || 'Office Hours'
+  const officeHours = content?.officeHours || 'Mon–Thu: 9:00 AM – 4:00 PM\nFri: 9:00 AM – Noon'
+
   return (
     <section className="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-12">
       <h1 className="text-3xl font-bold text-slate-900 sm:text-4xl">Contact</h1>
@@ -18,9 +36,8 @@ export default function ContactPage() {
           />
         </div>
         <div className="rounded-xl border border-slate-200 bg-white p-5">
-          <h2 className="text-lg font-semibold text-slate-900">Office Hours</h2>
-          <p className="mt-2 text-sm text-slate-600">Mon–Thu: 9:00 AM – 4:00 PM</p>
-          <p className="mt-1 text-sm text-slate-600">Fri: 9:00 AM – Noon</p>
+          <h2 className="text-lg font-semibold text-slate-900">{officeHoursTitle}</h2>
+          <p className="mt-2 whitespace-pre-line text-sm text-slate-600">{officeHours}</p>
         </div>
       </div>
     </section>
