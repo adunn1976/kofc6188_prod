@@ -11,10 +11,8 @@ const links = [
   { href: '/worship', label: 'Worship' },
   { href: '/bay-fellowship-hall-rental', label: 'Hall Rental' },
   { href: '/missions-outreach', label: 'Missions and Outreach' },
-  { href: '/sermons', label: 'Sermons' },
   { href: '/events', label: 'Events' },
   { href: '/staff', label: 'Staff' },
-  { href: '/give', label: 'Give' },
   { href: '/contact', label: 'Contact' },
 ]
 
