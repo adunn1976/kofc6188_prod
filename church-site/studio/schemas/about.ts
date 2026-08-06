@@ -6,6 +6,23 @@ export default defineType({
   type: 'document',
   fields: [
     {
+      name: 'aboutImage',
+      title: 'About Page Image',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        {
+          name: 'alt',
+          title: 'Alt Text',
+          type: 'string',
+          description: 'Describe the image for accessibility.',
+        },
+      ],
+      description: 'Optional image shown under the "About Our Church" heading.',
+    },
+    {
       name: 'mission',
       title: 'Mission',
       type: 'text',

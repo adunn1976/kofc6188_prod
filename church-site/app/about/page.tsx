@@ -1,9 +1,11 @@
+import Image from 'next/image'
 import { client } from '@/lib/sanity.client'
 import { aboutPageQuery, staffQuery } from '@/lib/sanity.queries'
+import { urlFor } from '@/lib/sanity.image'
 
 export default async function AboutPage() {
   let staff: any[] = []
-  let aboutContent: { mission?: string; vision?: string; values?: string } = {}
+  let aboutContent: { aboutImage?: any; mission?: string; vision?: string; values?: string } = {}
 
   try {
     const [staffData, aboutData] = await Promise.all([client.fetch(staffQuery), client.fetch(aboutPageQuery)])
@@ -20,6 +22,17 @@ export default async function AboutPage() {
   return (
     <section className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-12">
       <h1 className="text-3xl font-bold text-slate-900 sm:text-4xl">About Our Church</h1>
+      {aboutContent.aboutImage ? (
+        <div className="mt-4 overflow-hidden rounded-xl border border-slate-200 bg-white">
+          <Image
+            src={urlFor(aboutContent.aboutImage).fit('max').auto('format').url()}
+            alt={aboutContent.aboutImage?.alt || 'About our church'}
+            width={1600}
+            height={900}
+            className="h-auto w-full object-contain"
+          />
+        </div>
+      ) : null}
       <p className="mt-4 leading-7 text-slate-700">
         We are a Christ-centered congregation called to worship God, grow in faith, and serve our neighbors.
         Our mission is to help people know Jesus, find community, and live with purpose.

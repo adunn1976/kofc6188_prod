@@ -13,6 +13,7 @@ export const homepageQuery = `*[_type == "homepage"][0] {
 }`
 
 export const aboutPageQuery = `*[_type == "about"][0] {
+  aboutImage,
   mission,
   vision,
   values
