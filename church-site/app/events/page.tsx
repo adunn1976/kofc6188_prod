@@ -15,6 +15,13 @@ const weekdayNameToIndex: Record<string, number> = {
 }
 
 const weekdayNames = Object.keys(weekdayNameToIndex)
+const ordinalWordToNumber: Record<string, number> = {
+  first: 1,
+  second: 2,
+  third: 3,
+  fourth: 4,
+  fifth: 5,
+}
 
 function extractWeekdaysFromSchedule(schedule?: string) {
   if (!schedule) return [] as number[]
@@ -39,6 +46,24 @@ function extractFirstWeekdayExceptions(schedule?: string) {
   return exceptions
 }
 
+function extractOnlyNthWeekdays(schedule?: string) {
+  if (!schedule) return [] as Array<{ weekday: number; occurrence: number }>
+  const text = schedule.toLowerCase()
+  const nthOnly: Array<{ weekday: number; occurrence: number }> = []
+
+  for (const [ordinalWord, occurrence] of Object.entries(ordinalWordToNumber)) {
+    for (const weekday of weekdayNames) {
+      const nthPattern = new RegExp(`(?:every\\s+)?${ordinalWord}\\s+${weekday}(?:\\s+of\\s+(?:the\\s+)?month)?`)
+      const exceptPattern = new RegExp(`except\\s+(?:the\\s+)?${ordinalWord}\\s+${weekday}(?:\\s+of\\s+(?:the\\s+)?month)?`)
+      if (nthPattern.test(text) && !exceptPattern.test(text)) {
+        nthOnly.push({ weekday: weekdayNameToIndex[weekday], occurrence })
+      }
+    }
+  }
+
+  return nthOnly
+}
+
 function isFirstWeekdayOfMonth(year: number, month: number, day: number, weekday: number) {
   for (let d = 1; d <= 7; d += 1) {
     if (new Date(year, month, d).getDay() === weekday) {
@@ -46,6 +71,16 @@ function isFirstWeekdayOfMonth(year: number, month: number, day: number, weekday
     }
   }
   return false
+}
+
+function getWeekdayOccurrenceInMonth(year: number, month: number, day: number, weekday: number) {
+  let count = 0
+  for (let d = 1; d <= day; d += 1) {
+    if (new Date(year, month, d).getDay() === weekday) {
+      count += 1
+    }
+  }
+  return count
 }
 
 function extractTimeFromSchedule(schedule?: string) {
@@ -166,9 +201,18 @@ export default async function EventsPage() {
   for (const event of recurringEvents) {
     const weekdays = extractWeekdaysFromSchedule(event.schedule)
     const firstWeekdayExceptions = extractFirstWeekdayExceptions(event.schedule)
+    const nthOnlyWeekdays = extractOnlyNthWeekdays(event.schedule)
     for (let day = 1; day <= daysInMonth; day += 1) {
       const weekday = new Date(now.getFullYear(), now.getMonth(), day).getDay()
       if (weekdays.includes(weekday)) {
+        const nthRule = nthOnlyWeekdays.find((rule) => rule.weekday === weekday)
+        if (nthRule) {
+          const occurrence = getWeekdayOccurrenceInMonth(now.getFullYear(), now.getMonth(), day, weekday)
+          if (occurrence !== nthRule.occurrence) {
+            continue
+          }
+        }
+
         if (
           firstWeekdayExceptions.includes(weekday) &&
           isFirstWeekdayOfMonth(now.getFullYear(), now.getMonth(), day, weekday)
