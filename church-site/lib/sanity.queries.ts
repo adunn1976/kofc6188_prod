@@ -79,6 +79,7 @@ export const upcomingEventsQuery = `*[_type == "event" && featuredOnHomepage == 
   endDate,
   location,
   summary,
+  schedule,
   "ministryTitle": ministry->title
 }`
 
@@ -90,6 +91,7 @@ export const allEventsQuery = `*[_type == "event"] | order(date desc) {
   endDate,
   location,
   summary,
+  schedule,
   "ministryTitle": ministry->title
 }`
 
@@ -101,6 +103,7 @@ export const eventBySlugQuery = `*[_type == "event" && slug.current == $slug][0]
   endDate,
   location,
   summary,
+  schedule,
   body,
   "ministryTitle": ministry->title
 }`

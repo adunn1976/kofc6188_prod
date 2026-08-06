@@ -22,12 +22,18 @@ export default defineType({
       name: 'date',
       title: 'Start Date',
       type: 'datetime',
-      validation: (Rule) => Rule.required(),
+      description: 'Leave blank if this is a recurring event — use Recurring Schedule above instead.',
     },
     {
       name: 'endDate',
       title: 'End Date',
       type: 'datetime',
+    },
+    {
+      name: 'schedule',
+      title: 'Recurring Schedule',
+      type: 'string',
+      description: 'Use this for recurring events without a fixed date (e.g. "9:30–10:45 AM Every Sunday").',
     },
     {
       name: 'location',

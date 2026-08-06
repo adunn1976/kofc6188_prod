@@ -22,7 +22,7 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
       <p className="text-xs font-semibold uppercase tracking-wide text-blue-700">Event</p>
       <h1 className="mt-2 text-3xl font-bold text-slate-900 sm:text-4xl">{event.title}</h1>
       <p className="mt-3 text-sm text-slate-600">
-        {new Date(event.date).toLocaleString()}
+        {event.schedule ? event.schedule : event.date ? new Date(event.date).toLocaleString() : ''}
         {event.location ? ` • ${event.location}` : ''}
         {event.ministryTitle ? ` • ${event.ministryTitle}` : ''}
       </p>

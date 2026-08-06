@@ -207,7 +207,6 @@ export default async function HomePage() {
                 <p className="rounded-lg border border-slate-200 bg-white p-4 text-sm text-slate-600">Sermons will appear here when published.</p>
               )}
             </div>
-            <Link href="/sermons" className="mt-4 inline-block text-sm font-semibold text-blue-700 hover:underline">View all sermons →</Link>
           </div>
 
           <div>

@@ -10,6 +10,7 @@ type EventListItem = {
   location?: string
   ministryTitle?: string
   summary?: string
+  schedule?: string
 }
 
 export default async function EventsPage() {
@@ -36,7 +37,7 @@ export default async function EventsPage() {
                 </Link>
               </h2>
               <p className="mt-1 text-xs text-slate-500">
-                {new Date(event.date).toLocaleDateString()}
+                {event.schedule ? event.schedule : event.date ? new Date(event.date).toLocaleDateString() : ''}
                 {event.location ? ` • ${event.location}` : ''}
                 {event.ministryTitle ? ` • ${event.ministryTitle}` : ''}
               </p>
