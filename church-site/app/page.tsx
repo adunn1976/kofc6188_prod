@@ -53,7 +53,8 @@ type Sermon = {
 type Event = {
   _id: string
   title: string
-  date: string
+  date?: string
+  schedule?: string
   summary?: string
   location?: string
 }
@@ -166,7 +167,7 @@ export default async function HomePage() {
           {(events.length > 0 ? events.slice(0, 3) : []).map((event) => (
             <article key={event._id} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
               <p className="text-xs font-medium uppercase tracking-wide text-blue-700">
-                {new Date(event.date).toLocaleDateString()}
+                {event.schedule ? event.schedule : event.date ? new Date(event.date).toLocaleDateString() : ''}
               </p>
               <h3 className="mt-2 break-words text-lg font-semibold text-slate-900">{event.title}</h3>
               <p className="mt-2 text-sm text-slate-600">{event.summary || 'Join us for this upcoming church event.'}</p>
