@@ -30,6 +30,14 @@ export const bayFellowshipHallRentalQuery = `*[_type == "bayFellowshipHallRental
   ctaUrl
 }`
 
+export const worshipPageQuery = `*[_type == "worship"][0] {
+  pageTitle,
+  introText,
+  serviceTimesTitle,
+  pulpitHeading,
+  pulpitContent
+}`
+
 export const latestAnnouncementsQuery = `*[_type == "announcement"] | order(date desc)[0...3] {
   _id,
   title,

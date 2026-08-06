@@ -6,5 +6,6 @@ import staff from './staff'
 import announcement from './announcement'
 import about from './about'
 import bayFellowshipHallRental from './bayFellowshipHallRental'
+import worship from './worship'
 
-export const schemaTypes = [homepage, about, bayFellowshipHallRental, sermon, event, ministry, staff, announcement]
+export const schemaTypes = [homepage, about, bayFellowshipHallRental, worship, sermon, event, ministry, staff, announcement]
