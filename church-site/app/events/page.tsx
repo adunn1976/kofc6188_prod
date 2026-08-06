@@ -2,6 +2,8 @@ import { client } from '@/lib/sanity.client'
 import { allEventsQuery } from '@/lib/sanity.queries'
 import Link from 'next/link'
 
+const CHURCH_TIME_ZONE = 'America/New_York'
+
 const weekdayNameToIndex: Record<string, number> = {
   sunday: 0,
   monday: 1,
@@ -24,6 +26,54 @@ function extractTimeFromSchedule(schedule?: string) {
   if (!schedule) return ''
   const timeMatch = schedule.match(/\b\d{1,2}:\d{2}\s?(?:AM|PM|am|pm)(?:\s?[–-]\s?\d{1,2}:\d{2}\s?(?:AM|PM|am|pm))?\b/)
   return timeMatch ? timeMatch[0] : ''
+}
+
+function formatEventDate(date?: string) {
+  if (!date) return ''
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'numeric',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: CHURCH_TIME_ZONE,
+  }).format(new Date(date))
+}
+
+function formatEventTime(date?: string) {
+  if (!date) return ''
+  return new Intl.DateTimeFormat('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    timeZone: CHURCH_TIME_ZONE,
+  }).format(new Date(date))
+}
+
+function getEventLocalMinutes(date?: string) {
+  if (!date) return Number.MAX_SAFE_INTEGER
+  const parts = new Intl.DateTimeFormat('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
+    timeZone: CHURCH_TIME_ZONE,
+  }).formatToParts(new Date(date))
+
+  const hour = Number(parts.find((part) => part.type === 'hour')?.value || '0')
+  const minute = Number(parts.find((part) => part.type === 'minute')?.value || '0')
+  return hour * 60 + minute
+}
+
+function parseTimeTextToMinutes(timeText?: string) {
+  if (!timeText) return Number.MAX_SAFE_INTEGER
+  const match = timeText.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i)
+  if (!match) return Number.MAX_SAFE_INTEGER
+
+  let hour = Number(match[1])
+  const minute = Number(match[2])
+  const ampm = match[3].toUpperCase()
+
+  if (ampm === 'AM' && hour === 12) hour = 0
+  if (ampm === 'PM' && hour !== 12) hour += 12
+
+  return hour * 60 + minute
 }
 
 type EventListItem = {
@@ -117,16 +167,16 @@ export default async function EventsPage() {
               ...dayEvents.map((event) => ({
                 ...event,
                 isRecurring: false,
-                timeText: event.date
-                  ? new Date(event.date).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
-                  : '',
+                timeText: formatEventTime(event.date),
+                sortMinutes: getEventLocalMinutes(event.date),
               })),
               ...recurringDayEvents.map((event) => ({
                 ...event,
                 isRecurring: true,
                 timeText: extractTimeFromSchedule(event.schedule),
+                sortMinutes: parseTimeTextToMinutes(extractTimeFromSchedule(event.schedule)),
               })),
-            ]
+            ].sort((a, b) => a.sortMinutes - b.sortMinutes || a.title.localeCompare(b.title))
 
             return (
               <div key={day} className="min-h-[120px] rounded-lg border border-slate-200 bg-white p-2">
@@ -180,7 +230,7 @@ export default async function EventsPage() {
                 </Link>
               </h2>
               <p className="mt-1 text-xs text-slate-500">
-                {event.schedule ? event.schedule : event.date ? new Date(event.date).toLocaleDateString() : ''}
+                {event.schedule ? event.schedule : formatEventDate(event.date)}
                 {event.location ? ` • ${event.location}` : ''}
                 {event.ministryTitle ? ` • ${event.ministryTitle}` : ''}
               </p>
