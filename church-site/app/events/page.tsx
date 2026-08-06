@@ -24,8 +24,22 @@ function extractWeekdaysFromSchedule(schedule?: string) {
 
 function extractTimeFromSchedule(schedule?: string) {
   if (!schedule) return ''
-  const timeMatch = schedule.match(/\b\d{1,2}:\d{2}\s?(?:AM|PM|am|pm)(?:\s?[–-]\s?\d{1,2}:\d{2}\s?(?:AM|PM|am|pm))?\b/)
-  return timeMatch ? timeMatch[0] : ''
+  const text = schedule.replace(/\s+/g, ' ').trim()
+
+  // Handles formats like "9:30-10:45 AM" or "9:30 to 10:45 PM" by inferring
+  // the meridiem for the start time from the end time.
+  const inferredRangeMatch = text.match(/(\d{1,2}:\d{2})\s*(?:-|–|to)\s*\d{1,2}:\d{2}\s*(AM|PM)/i)
+  if (inferredRangeMatch) {
+    return `${inferredRangeMatch[1]} ${inferredRangeMatch[2].toUpperCase()}`
+  }
+
+  // Handles formats where start already has explicit meridiem, e.g. "9:30 AM-10:45 AM".
+  const explicitStartMatch = text.match(/(\d{1,2}:\d{2}\s*(?:AM|PM))/i)
+  if (explicitStartMatch) {
+    return explicitStartMatch[1].toUpperCase()
+  }
+
+  return ''
 }
 
 function formatEventDate(date?: string) {
