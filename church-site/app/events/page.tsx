@@ -14,12 +14,38 @@ const weekdayNameToIndex: Record<string, number> = {
   saturday: 6,
 }
 
+const weekdayNames = Object.keys(weekdayNameToIndex)
+
 function extractWeekdaysFromSchedule(schedule?: string) {
   if (!schedule) return [] as number[]
   const text = schedule.toLowerCase()
   return Object.entries(weekdayNameToIndex)
     .filter(([name]) => text.includes(name))
     .map(([, index]) => index)
+}
+
+function extractFirstWeekdayExceptions(schedule?: string) {
+  if (!schedule) return [] as number[]
+  const text = schedule.toLowerCase()
+  const exceptions: number[] = []
+
+  for (const weekday of weekdayNames) {
+    const pattern = new RegExp(`except\\s+(?:the\\s+)?first\\s+${weekday}(?:\\s+of\\s+(?:the\\s+)?month)?`)
+    if (pattern.test(text)) {
+      exceptions.push(weekdayNameToIndex[weekday])
+    }
+  }
+
+  return exceptions
+}
+
+function isFirstWeekdayOfMonth(year: number, month: number, day: number, weekday: number) {
+  for (let d = 1; d <= 7; d += 1) {
+    if (new Date(year, month, d).getDay() === weekday) {
+      return d === day
+    }
+  }
+  return false
 }
 
 function extractTimeFromSchedule(schedule?: string) {
@@ -139,9 +165,17 @@ export default async function EventsPage() {
   const recurringEventsByDay = new Map<number, EventListItem[]>()
   for (const event of recurringEvents) {
     const weekdays = extractWeekdaysFromSchedule(event.schedule)
+    const firstWeekdayExceptions = extractFirstWeekdayExceptions(event.schedule)
     for (let day = 1; day <= daysInMonth; day += 1) {
       const weekday = new Date(now.getFullYear(), now.getMonth(), day).getDay()
       if (weekdays.includes(weekday)) {
+        if (
+          firstWeekdayExceptions.includes(weekday) &&
+          isFirstWeekdayOfMonth(now.getFullYear(), now.getMonth(), day, weekday)
+        ) {
+          continue
+        }
+
         const existing = recurringEventsByDay.get(day) || []
         existing.push(event)
         recurringEventsByDay.set(day, existing)
