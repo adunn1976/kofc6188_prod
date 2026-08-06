@@ -108,13 +108,13 @@ export default async function HomePage() {
 
   return (
     <div>
-      <section className="relative h-[320px] w-full sm:h-[450px]">
+      <section className="relative h-[320px] w-full bg-slate-900 sm:h-[450px]">
         {homepage?.heroImage ? (
           <Image
             src={urlFor(homepage.heroImage).width(1800).height(900).url()}
             alt={homepage.heroImage?.alt || 'Church sanctuary'}
             fill
-            className="object-cover"
+            className="object-contain"
             priority
           />
         ) : (
@@ -122,7 +122,7 @@ export default async function HomePage() {
             src={fallbackHeroImage}
             alt="The Presbyterian Church of Havre de Grace"
             fill
-            className="object-cover"
+            className="object-contain"
             priority
           />
         )}
