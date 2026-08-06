@@ -130,45 +130,29 @@ export default async function HomePage() {
       </section>
 
       <section className="mx-auto max-w-6xl px-4 pb-12 sm:px-6">
-        <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl">Upcoming Events</h2>
-        <div className="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {(events.length > 0 ? events.slice(0, 3) : []).map((event) => (
-            <article key={event._id} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-              <p className="text-xs font-medium uppercase tracking-wide text-blue-700">
-                {event.schedule ? event.schedule : event.date ? new Date(event.date).toLocaleDateString() : ''}
-              </p>
-              <h3 className="mt-2 break-words text-lg font-semibold text-slate-900">{event.title}</h3>
-              <p className="mt-2 text-sm text-slate-600">{event.summary || 'Join us for this upcoming church event.'}</p>
-              <p className="mt-3 text-xs text-slate-500">{event.location || 'Church Campus'}</p>
-            </article>
-          ))}
-          {events.length === 0 && (
-            <article className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm md:col-span-2 lg:col-span-3">
-              <h3 className="text-lg font-semibold text-slate-900">Events Coming Soon</h3>
-              <p className="mt-2 text-sm text-slate-600">Upcoming events will appear here as soon as they are published in Sanity.</p>
-            </article>
-          )}
-        </div>
-        <div className="mt-5">
-          <Link href="/events" className="text-sm font-semibold text-blue-700 hover:underline">View all events →</Link>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-4 pb-12 sm:px-6">
-        <div className="grid gap-8 lg:grid-cols-2">
-          <div>
-            <h2 className="text-2xl font-bold text-slate-900">Church News</h2>
-            <div className="mt-4 space-y-3">
-              {(announcements.length > 0 ? announcements : []).map((item) => (
-                <article key={item._id} className="rounded-lg border border-slate-200 bg-white p-4">
-                  <h3 className="font-semibold text-slate-900">{item.title}</h3>
-                  <p className="mt-1 text-xs text-slate-500">{new Date(item.date).toLocaleDateString()}</p>
-                  {item.summary ? <p className="mt-2 text-sm text-slate-600">{item.summary}</p> : null}
+        <div className="grid gap-8 lg:grid-cols-3">
+          <div className="lg:col-span-2">
+            <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl">Upcoming Events</h2>
+            <div className="mt-5 grid gap-4 md:grid-cols-2">
+              {(events.length > 0 ? events.slice(0, 4) : []).map((event) => (
+                <article key={event._id} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                  <p className="text-xs font-medium uppercase tracking-wide text-blue-700">
+                    {event.schedule ? event.schedule : event.date ? new Date(event.date).toLocaleDateString() : ''}
+                  </p>
+                  <h3 className="mt-2 break-words text-lg font-semibold text-slate-900">{event.title}</h3>
+                  <p className="mt-2 text-sm text-slate-600">{event.summary || 'Join us for this upcoming church event.'}</p>
+                  <p className="mt-3 text-xs text-slate-500">{event.location || 'Church Campus'}</p>
                 </article>
               ))}
-              {announcements.length === 0 && (
-                <p className="rounded-lg border border-slate-200 bg-white p-4 text-sm text-slate-600">Announcements will appear here when published.</p>
+              {events.length === 0 && (
+                <article className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm md:col-span-2">
+                  <h3 className="text-lg font-semibold text-slate-900">Events Coming Soon</h3>
+                  <p className="mt-2 text-sm text-slate-600">Upcoming events will appear here as soon as they are published in Sanity.</p>
+                </article>
               )}
+            </div>
+            <div className="mt-5">
+              <Link href="/events" className="text-sm font-semibold text-blue-700 hover:underline">View all events →</Link>
             </div>
           </div>
 
@@ -193,6 +177,22 @@ export default async function HomePage() {
               <Link href="/worship" className="mt-4 inline-block text-sm font-medium text-blue-700 hover:underline">Worship Details →</Link>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 pb-12 sm:px-6">
+        <h2 className="text-2xl font-bold text-slate-900">Church News</h2>
+        <div className="mt-4 space-y-3">
+          {(announcements.length > 0 ? announcements : []).map((item) => (
+            <article key={item._id} className="rounded-lg border border-slate-200 bg-white p-4">
+              <h3 className="font-semibold text-slate-900">{item.title}</h3>
+              <p className="mt-1 text-xs text-slate-500">{new Date(item.date).toLocaleDateString()}</p>
+              {item.summary ? <p className="mt-2 text-sm text-slate-600">{item.summary}</p> : null}
+            </article>
+          ))}
+          {announcements.length === 0 && (
+            <p className="rounded-lg border border-slate-200 bg-white p-4 text-sm text-slate-600">Announcements will appear here when published.</p>
+          )}
         </div>
       </section>
     </div>
