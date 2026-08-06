@@ -1,11 +1,20 @@
 import Image from 'next/image'
+import RichText from '@/components/RichText'
 import { client } from '@/lib/sanity.client'
 import { aboutPageQuery, staffQuery } from '@/lib/sanity.queries'
 import { urlFor } from '@/lib/sanity.image'
 
+type RichContent = { _type?: string; [key: string]: unknown }[]
+
+type AboutContent = {
+  aboutImage?: any
+  mission?: RichContent | string
+  vision?: RichContent | string
+}
+
 export default async function AboutPage() {
   let staff: any[] = []
-  let aboutContent: { aboutImage?: any; mission?: string; vision?: string; values?: string } = {}
+  let aboutContent: AboutContent = {}
 
   try {
     const [staffData, aboutData] = await Promise.all([client.fetch(staffQuery), client.fetch(aboutPageQuery)])
@@ -15,9 +24,10 @@ export default async function AboutPage() {
     console.error('Error fetching staff for about page:', error)
   }
 
-  const missionText = aboutContent.mission || 'Love God, love people, and make disciples in our community.'
-  const visionText = aboutContent.vision || 'A welcoming church where every generation can grow in Christ.'
-  const valuesText = aboutContent.values || 'Scripture, prayer, worship, community, and compassionate service.'
+  const hasMissionContent = Array.isArray(aboutContent.mission) && aboutContent.mission.length > 0
+  const hasVisionContent = Array.isArray(aboutContent.vision) && aboutContent.vision.length > 0
+  const missionContent: RichContent | undefined = Array.isArray(aboutContent.mission) ? aboutContent.mission : undefined
+  const visionContent: RichContent | undefined = Array.isArray(aboutContent.vision) ? aboutContent.vision : undefined
 
   return (
     <section className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-12">
@@ -38,18 +48,26 @@ export default async function AboutPage() {
         Our mission is to help people know Jesus, find community, and live with purpose.
       </p>
 
-      <div className="mt-8 grid gap-6 md:grid-cols-3">
-        <div className="rounded-xl border border-slate-200 bg-white p-5">
+      <div className="mt-8 grid gap-6 md:grid-cols-2">
+        <div className="h-full rounded-xl border border-slate-200 bg-white p-5">
           <h2 className="text-lg font-semibold text-slate-900">Our Mission</h2>
-          <p className="mt-2 text-sm text-slate-600">{missionText}</p>
+          <div className="mt-2 text-sm text-slate-600">
+            {hasMissionContent ? (
+              <RichText value={missionContent} />
+            ) : (
+              <p>Love God, love people, and make disciples in our community.</p>
+            )}
+          </div>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-5">
+        <div className="h-full rounded-xl border border-slate-200 bg-white p-5">
           <h2 className="text-lg font-semibold text-slate-900">Our Vision</h2>
-          <p className="mt-2 text-sm text-slate-600">{visionText}</p>
-        </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-5">
-          <h2 className="text-lg font-semibold text-slate-900">Our Values</h2>
-          <p className="mt-2 text-sm text-slate-600">{valuesText}</p>
+          <div className="mt-2 text-sm text-slate-600">
+            {hasVisionContent ? (
+              <RichText value={visionContent} />
+            ) : (
+              <p>A welcoming church where every generation can grow in Christ.</p>
+            )}
+          </div>
         </div>
       </div>
 
