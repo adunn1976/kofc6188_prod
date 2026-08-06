@@ -134,10 +134,11 @@ export const ministryBySlugQuery = `*[_type == "ministry" && slug.current == $sl
   image
 }`
 
-export const staffQuery = `*[_type == "staff"] | order(order asc) {
+export const staffQuery = `*[_type == "staff"] | order(section asc, order asc) {
   _id,
   name,
   role,
+  section,
   bio,
   email,
   phone,

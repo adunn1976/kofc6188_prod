@@ -18,6 +18,13 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     },
     {
+      name: 'section',
+      title: 'Section',
+      type: 'string',
+      initialValue: 'Leaders',
+      description: 'Use "Leaders" or "Staff". You can also create additional section names as needed.',
+    },
+    {
       name: 'bio',
       title: 'Bio',
       type: 'text',
