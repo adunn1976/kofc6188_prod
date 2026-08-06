@@ -20,6 +20,12 @@ function extractWeekdaysFromSchedule(schedule?: string) {
     .map(([, index]) => index)
 }
 
+function extractTimeFromSchedule(schedule?: string) {
+  if (!schedule) return ''
+  const timeMatch = schedule.match(/\b\d{1,2}:\d{2}\s?(?:AM|PM|am|pm)(?:\s?[–-]\s?\d{1,2}:\d{2}\s?(?:AM|PM|am|pm))?\b/)
+  return timeMatch ? timeMatch[0] : ''
+}
+
 type EventListItem = {
   _id: string
   title: string
@@ -107,36 +113,43 @@ export default async function EventsPage() {
 
             const dayEvents = eventsByDay.get(day) || []
             const recurringDayEvents = recurringEventsByDay.get(day) || []
+            const calendarEvents = [
+              ...dayEvents.map((event) => ({
+                ...event,
+                isRecurring: false,
+                timeText: event.date
+                  ? new Date(event.date).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
+                  : '',
+              })),
+              ...recurringDayEvents.map((event) => ({
+                ...event,
+                isRecurring: true,
+                timeText: extractTimeFromSchedule(event.schedule),
+              })),
+            ]
 
             return (
-              <div key={day} className="min-h-[96px] rounded-lg border border-slate-200 bg-white p-2">
+              <div key={day} className="min-h-[120px] rounded-lg border border-slate-200 bg-white p-2">
                 <p className="text-xs font-semibold text-slate-700">{day}</p>
-                <div className="mt-1 space-y-1">
-                  {dayEvents.slice(0, 2).map((event) => (
-                    <p key={event._id} className="truncate text-[11px] text-blue-700">
-                      {event.slug?.current ? (
-                        <Link href={`/events/${event.slug.current}`} className="hover:underline" title={event.title}>
-                          {event.title}
-                        </Link>
-                      ) : (
-                        <span title={event.title}>{event.title}</span>
-                      )}
-                    </p>
+                <div className="mt-1 max-h-28 space-y-1 overflow-y-auto pr-1">
+                  {calendarEvents.map((event) => (
+                    <div key={`${event.isRecurring ? 'recurring' : 'dated'}-${event._id}`}>
+                      <p className={`truncate text-[11px] ${event.isRecurring ? 'text-emerald-700' : 'text-blue-700'}`}>
+                        {event.slug?.current ? (
+                          <Link href={`/events/${event.slug.current}`} className="hover:underline" title={event.title}>
+                            {event.isRecurring ? '↺ ' : ''}
+                            {event.title}
+                          </Link>
+                        ) : (
+                          <span title={event.title}>
+                            {event.isRecurring ? '↺ ' : ''}
+                            {event.title}
+                          </span>
+                        )}
+                      </p>
+                      {event.timeText ? <p className="truncate text-[10px] text-slate-500">{event.timeText}</p> : null}
+                    </div>
                   ))}
-                  {recurringDayEvents.slice(0, 1).map((event) => (
-                    <p key={`recurring-${event._id}`} className="truncate text-[11px] text-emerald-700">
-                      {event.slug?.current ? (
-                        <Link href={`/events/${event.slug.current}`} className="hover:underline" title={event.title}>
-                          ↺ {event.title}
-                        </Link>
-                      ) : (
-                        <span title={event.title}>↺ {event.title}</span>
-                      )}
-                    </p>
-                  ))}
-                  {dayEvents.length + recurringDayEvents.length > 3 ? (
-                    <p className="text-[11px] text-slate-500">+{dayEvents.length + recurringDayEvents.length - 3} more</p>
-                  ) : null}
                 </div>
               </div>
             )
