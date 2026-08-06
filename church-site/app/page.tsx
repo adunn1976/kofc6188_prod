@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { client } from '@/lib/sanity.client'
-import { homepageQuery, latestAnnouncementsQuery, latestSermonsQuery, upcomingEventsQuery } from '@/lib/sanity.queries'
+import { homepageQuery, latestAnnouncementsQuery, upcomingEventsQuery } from '@/lib/sanity.queries'
 import { urlFor } from '@/lib/sanity.image'
 
 type PortableTextChild = {
@@ -42,14 +42,6 @@ type Announcement = {
   summary?: string
 }
 
-type Sermon = {
-  _id: string
-  title: string
-  date: string
-  speaker?: string
-  mediaUrl?: string
-}
-
 type Event = {
   _id: string
   title: string
@@ -80,20 +72,17 @@ function asText(value: string | PortableTextBlock[] | undefined) {
 export default async function HomePage() {
   let homepage: HomepageData | null = null
   let announcements: Announcement[] = []
-  let sermons: Sermon[] = []
   let events: Event[] = []
 
   try {
-    const [homepageData, announcementsData, sermonsData, eventsData] = await Promise.all([
+    const [homepageData, announcementsData, eventsData] = await Promise.all([
       client.fetch(homepageQuery),
       client.fetch(latestAnnouncementsQuery),
-      client.fetch(latestSermonsQuery),
       client.fetch(upcomingEventsQuery),
     ])
 
     homepage = homepageData
     announcements = announcementsData || []
-    sermons = sermonsData || []
     events = eventsData || []
   } catch (error) {
     console.error('Error fetching church homepage content:', error)
@@ -130,33 +119,12 @@ export default async function HomePage() {
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
-        <div className="grid gap-8 lg:grid-cols-3">
-          <div className="lg:col-span-2">
-            <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl">{aboutSectionTitle}</h2>
-            <p className="mt-4 leading-7 text-slate-700">{aboutSectionText}</p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Link href="/about" className="rounded bg-blue-700 px-4 py-2 text-white hover:bg-blue-800">Learn More</Link>
-              <Link href="/contact" className="rounded border border-slate-300 bg-white px-4 py-2 text-slate-700 hover:bg-slate-100">Contact Us</Link>
-            </div>
-          </div>
-          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-            <h3 className="text-lg font-semibold text-slate-900">Service Times</h3>
-            <ul className="mt-3 space-y-2 text-sm text-slate-700">
-              {serviceTimes.length > 0 ? (
-                serviceTimes.map((item: ServiceTime, idx: number) => (
-                  <li key={idx}>
-                    <span className="font-medium">{item.day || 'Sunday'}:</span> {item.time || '9:00 AM'}
-                    {item.label ? ` (${item.label})` : ''}
-                  </li>
-                ))
-              ) : (
-                <>
-                  <li><span className="font-medium">Sunday:</span> 9:00 AM & 11:00 AM</li>
-                  <li><span className="font-medium">Wednesday:</span> 7:00 PM Prayer</li>
-                </>
-              )}
-            </ul>
-            <Link href="/worship" className="mt-4 inline-block text-sm font-medium text-blue-700 hover:underline">Worship Details →</Link>
+        <div>
+          <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl">{aboutSectionTitle}</h2>
+          <p className="mt-4 leading-7 text-slate-700">{aboutSectionText}</p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link href="/about" className="rounded bg-blue-700 px-4 py-2 text-white hover:bg-blue-800">Learn More</Link>
+            <Link href="/contact" className="rounded border border-slate-300 bg-white px-4 py-2 text-slate-700 hover:bg-slate-100">Contact Us</Link>
           </div>
         </div>
       </section>
@@ -189,28 +157,6 @@ export default async function HomePage() {
       <section className="mx-auto max-w-6xl px-4 pb-12 sm:px-6">
         <div className="grid gap-8 lg:grid-cols-2">
           <div>
-            <h2 className="text-2xl font-bold text-slate-900">Latest Sermons</h2>
-            <div className="mt-4 space-y-3">
-              {(sermons.length > 0 ? sermons.slice(0, 3) : []).map((sermon) => (
-                <article key={sermon._id} className="rounded-lg border border-slate-200 bg-white p-4">
-                  <h3 className="font-semibold text-slate-900">{sermon.title}</h3>
-                  <p className="mt-1 text-xs text-slate-500">
-                    {new Date(sermon.date).toLocaleDateString()} {sermon.speaker ? `• ${sermon.speaker}` : ''}
-                  </p>
-                  {sermon.mediaUrl ? (
-                    <a href={sermon.mediaUrl} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-sm font-medium text-blue-700 hover:underline">
-                      Listen / Watch
-                    </a>
-                  ) : null}
-                </article>
-              ))}
-              {sermons.length === 0 && (
-                <p className="rounded-lg border border-slate-200 bg-white p-4 text-sm text-slate-600">Sermons will appear here when published.</p>
-              )}
-            </div>
-          </div>
-
-          <div>
             <h2 className="text-2xl font-bold text-slate-900">Church News</h2>
             <div className="mt-4 space-y-3">
               {(announcements.length > 0 ? announcements : []).map((item) => (
@@ -223,6 +169,28 @@ export default async function HomePage() {
               {announcements.length === 0 && (
                 <p className="rounded-lg border border-slate-200 bg-white p-4 text-sm text-slate-600">Announcements will appear here when published.</p>
               )}
+            </div>
+          </div>
+
+          <div>
+            <h2 className="text-2xl font-bold text-slate-900">Service Times</h2>
+            <div className="mt-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+              <ul className="space-y-2 text-sm text-slate-700">
+                {serviceTimes.length > 0 ? (
+                  serviceTimes.map((item: ServiceTime, idx: number) => (
+                    <li key={idx}>
+                      <span className="font-medium">{item.day || 'Sunday'}:</span> {item.time || '9:00 AM'}
+                      {item.label ? ` (${item.label})` : ''}
+                    </li>
+                  ))
+                ) : (
+                  <>
+                    <li><span className="font-medium">Sunday:</span> 9:00 AM & 11:00 AM</li>
+                    <li><span className="font-medium">Wednesday:</span> 7:00 PM Prayer</li>
+                  </>
+                )}
+              </ul>
+              <Link href="/worship" className="mt-4 inline-block text-sm font-medium text-blue-700 hover:underline">Worship Details →</Link>
             </div>
           </div>
         </div>
