@@ -12,6 +12,19 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     },
     {
+      name: 'vineHeading',
+      title: 'The Vine / Food Pantry Heading',
+      type: 'string',
+      description: 'Optional heading specifically for The Vine / Food Pantry.',
+    },
+    {
+      name: 'vineContent',
+      title: 'The Vine / Food Pantry content',
+      type: 'array',
+      of: [{ type: 'block' }, { type: 'image' }],
+      description: 'Content area for The Vine / Food Pantry — upload an image of the PDF or add formatted text here.',
+    },
+    {
       name: 'slug',
       title: 'Slug',
       type: 'slug',

@@ -131,8 +131,13 @@ export const ministryBySlugQuery = `*[_type == "ministry" && slug.current == $sl
   description,
   contactName,
   contactEmail,
-  image
+  image,
+  pulpitHeading,
+  pulpitContent,
+  vineHeading,
+  vineContent
 }`
+
 
 export const staffQuery = `*[_type == "staff"] | order(section asc, order asc) {
   _id,
