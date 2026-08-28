@@ -3,6 +3,8 @@ import { client } from '@/lib/sanity.client'
 import RichText from '@/components/RichText'
 import ContactInfoBlock from '@/components/ContactInfoBlock'
 import HallCarousel from '@/components/HallCarousel'
+import fs from 'fs'
+import path from 'path'
 import { bayFellowshipHallRentalQuery } from '@/lib/sanity.queries'
 
 type RentalPageContent = {
@@ -45,7 +47,26 @@ export default async function BayFellowshipHallRentalPage() {
       <h1 className="text-3xl font-bold text-slate-900 sm:text-4xl">{pageTitle}</h1>
       <p className="mt-4 leading-7 text-slate-700">{introText}</p>
 
-      <HallCarousel />
+      {/* Read images from public/hall and pass to carousel (server-side) */}
+      {
+        (() => {
+          let carouselImages: string[] = []
+          try {
+            const imgDir = path.join(process.cwd(), 'church-site', 'public', 'hall')
+            if (fs.existsSync(imgDir)) {
+              const files = fs
+                .readdirSync(imgDir)
+                .filter((f) => /\.(jpe?g|png|webp)$/i.test(f))
+                .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+              carouselImages = files.map((f) => `/hall/${f}`)
+            }
+          } catch (err) {
+            console.error('Error reading hall images:', err)
+          }
+
+          return <HallCarousel images={carouselImages} />
+        })()
+      }
 
       <div className="mt-8 rounded-xl border border-slate-200 bg-white p-6">
         <h2 className="text-xl font-semibold text-slate-900">Rental Highlights</h2>
