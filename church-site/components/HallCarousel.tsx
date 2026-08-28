@@ -41,7 +41,7 @@ export default function HallCarousel({ images, autoPlayMs = 4000 }: Props) {
           style={{ width: `${items.length * 100}%`, transform: `translateX(-${index * (100 / items.length)}%)` }}
         >
           {items.map((src, i) => (
-            <div key={i} className="flex-none w-full relative aspect-video">
+            <div key={i} className="flex-none w-full relative h-40 sm:h-56 md:h-64">
               <Image
                 src={src}
                 alt={`Hall image ${i + 1}`}
