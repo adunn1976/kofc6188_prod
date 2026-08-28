@@ -22,6 +22,10 @@ type MissionOutreachDetail = {
   contactName?: string
   contactEmail?: string
   description?: PortableTextBlock[]
+  pulpitHeading?: string
+  pulpitContent?: PortableTextBlock[]
+  vineHeading?: string
+  vineContent?: PortableTextBlock[]
 }
 
 export default async function MissionOutreachDetailPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -68,6 +72,24 @@ export default async function MissionOutreachDetailPage({ params }: { params: Pr
       <div className="mt-8">
         <RichText value={item.description} />
       </div>
+
+      {/* The Vine / Pulpit-style content (prefer vine-specific fields) */}
+      {(() => {
+        const heading = item.vineHeading || item.pulpitHeading
+        const content = item.vineContent || item.pulpitContent
+        const hasContent = Boolean(content && content.length > 0)
+
+        if (!hasContent) return null
+
+        return (
+          <div className="mt-10">
+            {heading ? <h2 className="mt-4 text-2xl font-bold text-slate-900">{heading}</h2> : null}
+            <div className="mt-4">
+              <RichText value={content} />
+            </div>
+          </div>
+        )
+      })()}
     </section>
   )
 }
