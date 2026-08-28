@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { client } from '@/lib/sanity.client'
 import RichText from '@/components/RichText'
 import ContactInfoBlock from '@/components/ContactInfoBlock'
+import HallCarousel from '@/components/HallCarousel'
 import { bayFellowshipHallRentalQuery } from '@/lib/sanity.queries'
 
 type RentalPageContent = {
@@ -43,6 +44,8 @@ export default async function BayFellowshipHallRentalPage() {
     <section className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-12">
       <h1 className="text-3xl font-bold text-slate-900 sm:text-4xl">{pageTitle}</h1>
       <p className="mt-4 leading-7 text-slate-700">{introText}</p>
+
+      <HallCarousel />
 
       <div className="mt-8 rounded-xl border border-slate-200 bg-white p-6">
         <h2 className="text-xl font-semibold text-slate-900">Rental Highlights</h2>
