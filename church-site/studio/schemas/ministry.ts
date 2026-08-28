@@ -53,6 +53,20 @@ export default defineType({
         },
       ],
     },
+    {
+      name: 'pulpitHeading',
+      title: 'Pulpit Section Heading',
+      type: 'string',
+      description: 'Optional heading for a small pulpit/pdf section for this ministry (e.g. "The Vine Pulpit").',
+    },
+    {
+      name: 'pulpitContent',
+      title: 'Pulpit Content (PDF image)',
+      type: 'array',
+      of: [{ type: 'block' }, { type: 'image' }],
+      description:
+        'Small content area for a PDF preview or short note. Upload an image of the PDF here (or use formatted text). This mirrors the Worship page pulpit content.',
+    },
   ],
   preview: {
     select: {
