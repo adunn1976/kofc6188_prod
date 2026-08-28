@@ -49,6 +49,24 @@ export default async function MinistryDetailPage({ params }: { params: Promise<{
       <div className="mt-8">
         <RichText value={ministry.description} />
       </div>
+
+      {/* The Vine / Pulpit-style content (prefer vine-specific fields) */}
+      {(() => {
+        const heading = ministry.vineHeading || ministry.pulpitHeading
+        const content = ministry.vineContent || ministry.pulpitContent
+        const hasContent = Boolean(content && content.length > 0)
+
+        if (!hasContent) return null
+
+        return (
+          <div className="mt-10">
+            {heading ? <h2 className="mt-4 text-2xl font-bold text-slate-900">{heading}</h2> : null}
+            <div className="mt-4">
+              <RichText value={content} />
+            </div>
+          </div>
+        )
+      })()}
     </section>
   )
 }
