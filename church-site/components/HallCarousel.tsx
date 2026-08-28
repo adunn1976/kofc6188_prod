@@ -41,13 +41,16 @@ export default function HallCarousel({ images, autoPlayMs = 4000 }: Props) {
           style={{ width: `${items.length * 100}%`, transform: `translateX(-${index * (100 / items.length)}%)` }}
         >
           {items.map((src, i) => (
-            <div key={i} className="flex-none w-full relative h-40 sm:h-56 md:h-64">
+            <div
+              key={i}
+              className="flex-none w-full relative h-40 sm:h-56 md:h-64 flex items-center justify-center bg-slate-50"
+            >
               <Image
                 src={src}
                 alt={`Hall image ${i + 1}`}
                 fill
                 sizes="(max-width: 768px) 100vw, 800px"
-                className="object-cover"
+                className="object-contain"
                 priority={i === 0}
               />
             </div>
