@@ -84,3 +84,5 @@ Then add Sanity schemas for:
 ## Handoff-Friendly Goal
 
 The final setup should let church staff manage routine content without touching code, GitHub, or Vercel settings.
+
+<!-- Trigger redeploy: 2026-08-28 17:59 UTC -->
