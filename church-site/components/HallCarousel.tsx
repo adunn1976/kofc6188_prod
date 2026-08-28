@@ -43,7 +43,8 @@ export default function HallCarousel({ images, autoPlayMs = 4000 }: Props) {
           {items.map((src, i) => (
             <div
               key={i}
-              className="flex-none w-full relative h-40 sm:h-56 md:h-64 flex items-center justify-center bg-slate-50"
+              className="flex-none relative h-40 sm:h-56 md:h-64 flex items-center justify-center bg-slate-50"
+              style={{ width: `${100 / items.length}%` }}
             >
               <Image
                 src={src}
